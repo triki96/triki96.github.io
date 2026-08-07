@@ -9,17 +9,22 @@ Il mio percorso di studio su [TryHackMe "Cyber Security 101"](https://tryhackme.
 <div id="course-module-list">
   {% for module in site.data.cyber_security_101 %}
     {% assign post_count = site.tags[module.slug].size %}
-    <a href="{{ '/tags/' | append: module.slug | append: '/' | relative_url }}" class="card-wrapper card d-flex flex-row justify-content-between align-items-center p-3 mb-2 text-decoration-none">
-      <span>
-        <strong>{{ module.number }}.</strong> {{ module.title }}
-      </span>
-      <span class="text-muted small">
-        {% if post_count > 0 %}
+    {% if post_count > 0 %}
+      <a href="{{ '/tags/' | append: module.slug | append: '/' | relative_url }}" class="card-wrapper card d-flex flex-row justify-content-between align-items-center p-3 mb-2 text-decoration-none">
+        <span>
+          <strong>{{ module.number }}.</strong> {{ module.title }}
+        </span>
+        <span class="text-muted small">
           {{ post_count }} room{% if post_count != 1 %}s{% endif %}
-        {% else %}
-          in arrivo
-        {% endif %}
-      </span>
-    </a>
+        </span>
+      </a>
+    {% else %}
+      <div class="card-wrapper card d-flex flex-row justify-content-between align-items-center p-3 mb-2 text-muted">
+        <span>
+          <strong>{{ module.number }}.</strong> {{ module.title }}
+        </span>
+        <span class="text-muted small">in arrivo</span>
+      </div>
+    {% endif %}
   {% endfor %}
 </div>

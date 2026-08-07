@@ -26,10 +26,6 @@ My goal is to move from a research background in cryptography into hands-on offe
 
 ---
 
-Check out my [Cybersecurity notes]({{ '/cybersecurity/' | relative_url }}) or my [Cryptography posts]({{ '/cryptography/' | relative_url }}).
-
----
-
 ### ⚖️ Disclaimer
 
 I contenuti pubblicati su questo sito (post, note, write-up di CTF) hanno **scopo esclusivamente educativo e divulgativo**, legato al mio percorso di studio e transizione verso la cybersecurity offensiva.
