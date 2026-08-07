@@ -1,0 +1,42 @@
+- number: 1
+  title: "A Journey into Cybersecurity"
+  slug: a-journey-into-cybersecurity
+- number: 2
+  title: "Linux Fundamentals"
+  slug: linux-fundamentals
+- number: 3
+  title: "Windows Fundamentals"
+  slug: windows-fundamentals
+- number: 4
+  title: "Active Directory"
+  slug: active-directory
+- number: 5
+  title: "Command Line"
+  slug: command-line
+- number: 6
+  title: "Networking"
+  slug: networking
+- number: 7
+  title: "Cryptography"
+  slug: cryptography
+- number: 8
+  title: "Exploitation Basics"
+  slug: exploitation-basics
+- number: 9
+  title: "Web Hacking"
+  slug: web-hacking
+- number: 10
+  title: "Offensive Security Tooling"
+  slug: offensive-security-tooling
+- number: 11
+  title: "Defensive Security"
+  slug: defensive-security
+- number: 12
+  title: "Security Solutions"
+  slug: security-solutions
+- number: 13
+  title: "Defensive Security Tooling"
+  slug: defensive-security-tooling
+- number: 14
+  title: "OWASP Top 10 (2025)"
+  slug: owasp-top-10-2025

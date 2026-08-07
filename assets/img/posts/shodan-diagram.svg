@@ -1,0 +1,46 @@
+<svg width="700" height="380" viewBox="0 0 700 380" xmlns="http://www.w3.org/2000/svg" font-family="Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#555" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+
+  <rect width="700" height="380" fill="#ffffff"/>
+
+  <text x="350" y="28" text-anchor="middle" font-size="15" font-weight="600" fill="#222">Come funziona Shodan</text>
+
+  <!-- Fase 1: crawler -->
+  <rect x="280" y="50" width="140" height="50" rx="8" fill="#e7f0fd" stroke="#4a86e8" stroke-width="1"/>
+  <text x="350" y="70" text-anchor="middle" font-size="12" font-weight="600" fill="#1a3d7c">Crawler Shodan</text>
+  <text x="350" y="87" text-anchor="middle" font-size="11" fill="#1a3d7c">scansiona 24/7</text>
+
+  <line x1="280" y1="75" x2="130" y2="75" stroke="#555" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <line x1="420" y1="75" x2="570" y2="75" stroke="#555" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <rect x="50" y="55" width="80" height="40" rx="8" fill="#f2f2f2" stroke="#999" stroke-width="1"/>
+  <text x="90" y="79" text-anchor="middle" font-size="11" fill="#333">Server</text>
+
+  <rect x="570" y="55" width="80" height="40" rx="8" fill="#f2f2f2" stroke="#999" stroke-width="1"/>
+  <text x="610" y="79" text-anchor="middle" font-size="11" fill="#333">Webcam / IoT</text>
+
+  <line x1="50" y1="120" x2="650" y2="120" stroke="#ddd" stroke-width="1"/>
+
+  <!-- Fase 2: banner -->
+  <text x="350" y="145" text-anchor="middle" font-size="12" font-weight="600" fill="#222">Cattura del banner (senza autenticarsi)</text>
+  <rect x="210" y="160" width="280" height="70" rx="8" fill="#e6f5f0" stroke="#2fa87d" stroke-width="1"/>
+  <text x="350" y="180" text-anchor="middle" font-size="11" fill="#1c5c42">Server: Apache/2.4.41</text>
+  <text x="350" y="196" text-anchor="middle" font-size="11" fill="#1c5c42">Porta: 22, servizio: OpenSSH 7.6</text>
+  <text x="350" y="212" text-anchor="middle" font-size="11" fill="#1c5c42">Paese, org, coordinate GPS...</text>
+
+  <line x1="50" y1="248" x2="650" y2="248" stroke="#ddd" stroke-width="1"/>
+
+  <!-- Fase 3: database -->
+  <text x="350" y="272" text-anchor="middle" font-size="12" font-weight="600" fill="#222">Database ricercabile</text>
+  <rect x="230" y="285" width="240" height="46" rx="8" fill="#f2e9fb" stroke="#8e5fd6" stroke-width="1"/>
+  <text x="350" y="313" text-anchor="middle" font-size="11" fill="#4a2e7a">Miliardi di banner indicizzati</text>
+
+  <line x1="350" y1="331" x2="350" y2="345" stroke="#555" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <rect x="140" y="345" width="420" height="26" rx="6" fill="#fdece7" stroke="#e06c4f" stroke-width="1"/>
+  <text x="350" y="362" text-anchor="middle" font-size="11" fill="#8a3a26">apache country:IT port:443 org:"..."</text>
+</svg>

@@ -1,6 +1,17 @@
 @use '../abstracts/variables' as v;
 @use '../abstracts/breakpoints' as bp;
 
+.btn-outline-plain {
+  color: var(--text-color);
+  border-color: var(--btn-border-color);
+
+  &:not(.disabled):hover {
+    color: var(--text-color);
+    border-color: var(--text-color);
+    background-color: transparent;
+  }
+}
+
 #back-to-top {
   visibility: hidden;
   opacity: 0;
