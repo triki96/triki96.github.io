@@ -22,7 +22,7 @@ title: "Titolo"
 date: AAAA-MM-GG 12:00:00 +0200
 categories: [Cyber Security 101]
 tags: [nome-modulo-thm, argomento-specifico]
-# description: "..."
+description: "..."
 toc: true
 ---
 
@@ -48,7 +48,7 @@ toc: true
 ```
 
 Note sul formato:
-- `description` nel front matter resta commentata (non compilata) salvo indicazione contraria
+- `description` nel front matter va sempre compilata (1 riga, riassume il contenuto del post)
 - `tags` in inglese minuscolo: nome esatto del modulo THM (slug) + argomento specifico
 - tabella dei codici HTTP (quando presente): ordine 200, 301/302, 403, 404
 - niente sezione "Collegamenti" se non ci sono link reali ad altri post già esistenti
