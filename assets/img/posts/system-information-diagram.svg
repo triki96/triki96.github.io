@@ -1,0 +1,16 @@
+<svg width="640" height="220" viewBox="0 0 640 220" xmlns="http://www.w3.org/2000/svg" font-family="Helvetica, Arial, sans-serif">
+  <rect width="640" height="220" fill="#ffffff"/>
+  <rect x="30" y="20" width="580" height="170" rx="6" fill="#f7f7f7" stroke="#999" stroke-width="1.2"/>
+  <rect x="30" y="20" width="580" height="26" rx="6" fill="#e2e2e2" stroke="#999" stroke-width="1"/>
+  <text x="50" y="38" font-size="11" font-weight="600" fill="#333">System Information</text>
+  <circle cx="600" cy="33" r="5" fill="#e06c4f"/>
+  <circle cx="580" cy="33" r="5" fill="#d9a441"/>
+  <circle cx="560" cy="33" r="5" fill="#2fa87d"/>
+  
+  <text x="50" y="75" font-size="9.5" fill="#333">OS Name: Microsoft Windows 11 Pro</text>
+  <text x="50" y="93" font-size="9.5" fill="#333">System Manufacturer: Dell Inc.</text>
+  <text x="50" y="111" font-size="9.5" fill="#333">Processor: Intel Core i7</text>
+  <text x="50" y="129" font-size="9.5" fill="#333">Installed Physical Memory: 16.0 GB</text>
+  <text x="50" y="147" font-size="9.5" fill="#333">BIOS Version: 2.14.0</text>
+  <text x="320" y="205" text-anchor="middle" font-size="9.5" fill="#888">Illustrazione schematica, non uno screenshot reale dell'interfaccia Windows</text>
+</svg>

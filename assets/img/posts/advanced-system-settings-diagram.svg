@@ -1,0 +1,55 @@
+<svg width="680" height="420" viewBox="0 0 680 420" xmlns="http://www.w3.org/2000/svg" font-family="Helvetica, Arial, sans-serif">
+  <rect width="680" height="420" fill="#ffffff"/>
+
+  <text x="340" y="26" text-anchor="middle" font-size="15" font-weight="600" fill="#222">System Properties — struttura delle schede</text>
+
+  <!-- Window frame -->
+  <rect x="40" y="45" width="600" height="340" rx="6" fill="#f7f7f7" stroke="#999" stroke-width="1.2"/>
+  <rect x="40" y="45" width="600" height="26" rx="6" fill="#e2e2e2" stroke="#999" stroke-width="1"/>
+  <text x="60" y="63" font-size="11" font-weight="600" fill="#333">System Properties</text>
+  <circle cx="610" cy="58" r="5" fill="#e06c4f"/>
+  <circle cx="590" cy="58" r="5" fill="#d9a441"/>
+  <circle cx="570" cy="58" r="5" fill="#2fa87d"/>
+
+  <!-- Tabs -->
+  <g>
+    <rect x="50" y="78" width="140" height="28" fill="#f7f7f7" stroke="#999" stroke-width="1"/>
+    <text x="120" y="96" text-anchor="middle" font-size="10" fill="#444">Computer Name</text>
+
+    <rect x="190" y="78" width="110" height="28" fill="#f7f7f7" stroke="#999" stroke-width="1"/>
+    <text x="245" y="96" text-anchor="middle" font-size="10" fill="#444">Hardware</text>
+
+    <rect x="300" y="78" width="110" height="28" fill="#e7f0fd" stroke="#4a86e8" stroke-width="1"/>
+    <text x="355" y="96" text-anchor="middle" font-size="10" font-weight="600" fill="#1a3d7c">Advanced</text>
+
+    <rect x="410" y="78" width="110" height="28" fill="#f7f7f7" stroke="#999" stroke-width="1"/>
+    <text x="465" y="96" text-anchor="middle" font-size="10" fill="#444">Remote</text>
+  </g>
+
+  <!-- Content area -->
+  <rect x="50" y="106" width="560" height="255" fill="#ffffff" stroke="#ccc" stroke-width="1"/>
+
+  <text x="70" y="130" font-size="11" font-weight="600" fill="#222">Advanced — pulsanti che aprono finestre separate</text>
+
+  <!-- Performance -->
+  <rect x="70" y="145" width="520" height="46" rx="4" fill="#e6f5f0" stroke="#2fa87d" stroke-width="1"/>
+  <text x="90" y="164" font-size="10.5" font-weight="600" fill="#1c5c42">Performance → Settings...</text>
+  <text x="90" y="180" font-size="9.5" fill="#1c5c42">Visual Effects · memoria virtuale (paging file)</text>
+
+  <!-- User Profiles -->
+  <rect x="70" y="197" width="520" height="46" rx="4" fill="#f2e9fb" stroke="#8e5fd6" stroke-width="1"/>
+  <text x="90" y="216" font-size="10.5" font-weight="600" fill="#4a2e7a">User Profiles → Settings...</text>
+  <text x="90" y="232" font-size="9.5" fill="#4a2e7a">elenco profili, dimensione su disco, eliminazione</text>
+
+  <!-- Startup and Recovery -->
+  <rect x="70" y="249" width="520" height="46" rx="4" fill="#fdece7" stroke="#e06c4f" stroke-width="1"/>
+  <text x="90" y="268" font-size="10.5" font-weight="600" fill="#8a3a26">Startup and Recovery → Settings...</text>
+  <text x="90" y="284" font-size="9.5" fill="#8a3a26">avvio di default · comportamento su crash · file di dump</text>
+
+  <!-- Environment Variables -->
+  <rect x="70" y="301" width="520" height="46" rx="4" fill="#fff3d6" stroke="#d9a441" stroke-width="1"/>
+  <text x="90" y="320" font-size="10.5" font-weight="600" fill="#7a5a12">Environment Variables...</text>
+  <text x="90" y="336" font-size="9.5" fill="#7a5a12">User variables · System variables (es. %windir%, %PATH%)</text>
+
+  <text x="340" y="400" text-anchor="middle" font-size="9.5" fill="#888">Illustrazione schematica, non uno screenshot reale dell'interfaccia Windows</text>
+</svg>

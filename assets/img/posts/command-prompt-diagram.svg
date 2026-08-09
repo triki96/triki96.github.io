@@ -1,0 +1,17 @@
+<svg width="640" height="220" viewBox="0 0 640 220" xmlns="http://www.w3.org/2000/svg" font-family="Helvetica, Arial, sans-serif">
+  <rect width="640" height="220" fill="#ffffff"/>
+  <rect x="30" y="20" width="580" height="170" rx="6" fill="#f7f7f7" stroke="#999" stroke-width="1.2"/>
+  <rect x="30" y="20" width="580" height="26" rx="6" fill="#e2e2e2" stroke="#999" stroke-width="1"/>
+  <text x="50" y="38" font-size="11" font-weight="600" fill="#333">Command Prompt</text>
+  <circle cx="600" cy="33" r="5" fill="#e06c4f"/>
+  <circle cx="580" cy="33" r="5" fill="#d9a441"/>
+  <circle cx="560" cy="33" r="5" fill="#2fa87d"/>
+  
+  <rect x="50" y="58" width="530" height="120" fill="#111111"/>
+  <text x="60" y="78" font-size="9.5" font-family="Consolas, monospace" fill="#e0e0e0">C:\Users\triki96&gt; whoami</text>
+  <text x="60" y="94" font-size="9.5" font-family="Consolas, monospace" fill="#9fd89f">desktop-abc123\triki96</text>
+  <text x="60" y="114" font-size="9.5" font-family="Consolas, monospace" fill="#e0e0e0">C:\Users\triki96&gt; ipconfig</text>
+  <text x="60" y="130" font-size="9.5" font-family="Consolas, monospace" fill="#9fd89f">IPv4 Address. . . . . . . : 192.168.1.24</text>
+  <text x="60" y="150" font-size="9.5" font-family="Consolas, monospace" fill="#e0e0e0">C:\Users\triki96&gt; _</text>
+  <text x="320" y="205" text-anchor="middle" font-size="9.5" fill="#888">Illustrazione schematica, non uno screenshot reale dell'interfaccia Windows</text>
+</svg>
