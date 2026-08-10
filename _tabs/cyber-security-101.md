@@ -4,8 +4,6 @@ order: 1
 title: Cyber Security 101
 ---
 
-Il mio percorso di studio su [TryHackMe "Cyber Security 101"](https://tryhackme.com/path/outline/cybersecurity101): 14 moduli, 56 room, in preparazione alla certificazione SEC1.
-
 <div id="course-module-list">
   {% for module in site.data.cyber_security_101 %}
     {% assign post_count = site.tags[module.slug].size %}

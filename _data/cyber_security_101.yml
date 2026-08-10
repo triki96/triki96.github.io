@@ -8,35 +8,32 @@
   title: "Windows Fundamentals"
   slug: windows-fundamentals
 - number: 4
-  title: "Active Directory"
-  slug: active-directory
-- number: 5
   title: "Command Line"
   slug: command-line
-- number: 6
+- number: 5
   title: "Networking"
   slug: networking
-- number: 7
+- number: 6
   title: "Cryptography"
   slug: cryptography
-- number: 8
+- number: 7
   title: "Exploitation Basics"
   slug: exploitation-basics
-- number: 9
+- number: 8
   title: "Web Hacking"
   slug: web-hacking
-- number: 10
+- number: 9
   title: "Offensive Security Tooling"
   slug: offensive-security-tooling
-- number: 11
+- number: 10
   title: "Defensive Security"
   slug: defensive-security
-- number: 12
+- number: 11
   title: "Security Solutions"
   slug: security-solutions
-- number: 13
+- number: 12
   title: "Defensive Security Tooling"
   slug: defensive-security-tooling
-- number: 14
+- number: 13
   title: "OWASP Top 10 (2025)"
   slug: owasp-top-10-2025

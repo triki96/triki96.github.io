@@ -2,7 +2,7 @@
 title: "Linux Fundamentals"
 date: 2026-08-08 10:00:00 +0200
 categories: [Cyber Security 101]
-tags: [a-journey-into-cybersecurity, linux, linux-fundamentals, shell, directories, passwd]
+tags: [linux-fundamentals, linux, linux-fundamentals, shell, directories, passwd]
 description: "Comandi essenziali, operatori shell, permessi e directory principali di un sistema Linux."
 toc: true
 ---

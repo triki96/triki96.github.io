@@ -1,0 +1,22 @@
+<svg width="680" height="260" viewBox="0 0 680 260" xmlns="http://www.w3.org/2000/svg" font-family="Helvetica, Arial, sans-serif">
+  <rect width="680" height="260" fill="#ffffff"/>
+  <text x="340" y="26" text-anchor="middle" font-size="15" font-weight="600" fill="#222">Security Groups vs Organizational Units</text>
+
+  <rect x="50" y="50" width="270" height="170" rx="8" fill="#e7f0fd" stroke="#4a86e8" stroke-width="1"/>
+  <text x="185" y="76" text-anchor="middle" font-size="12" font-weight="600" fill="#1a3d7c">Organizational Unit</text>
+  <text x="185" y="100" text-anchor="middle" font-size="10" fill="#1a3d7c">Applica POLICY</text>
+  <text x="185" y="120" text-anchor="middle" font-size="9.5" fill="#1a3d7c">Un utente sta in UNA sola OU</text>
+  <text x="185" y="140" text-anchor="middle" font-size="9.5" fill="#1a3d7c">alla volta</text>
+  <text x="185" y="165" text-anchor="middle" font-size="9.5" fill="#1a3d7c">Es: OU "Contabilità" →</text>
+  <text x="185" y="182" text-anchor="middle" font-size="9.5" fill="#1a3d7c">screensaver dopo 5 min</text>
+
+  <rect x="360" y="50" width="270" height="170" rx="8" fill="#e6f5f0" stroke="#2fa87d" stroke-width="1"/>
+  <text x="495" y="76" text-anchor="middle" font-size="12" font-weight="600" fill="#1c5c42">Security Group</text>
+  <text x="495" y="100" text-anchor="middle" font-size="10" fill="#1c5c42">Concede PERMESSI</text>
+  <text x="495" y="120" text-anchor="middle" font-size="9.5" fill="#1c5c42">Un utente può stare in PIÙ</text>
+  <text x="495" y="140" text-anchor="middle" font-size="9.5" fill="#1c5c42">gruppi contemporaneamente</text>
+  <text x="495" y="165" text-anchor="middle" font-size="9.5" fill="#1c5c42">Es: gruppo "Stampante-Piano2"</text>
+  <text x="495" y="182" text-anchor="middle" font-size="9.5" fill="#1c5c42">→ accesso alla risorsa</text>
+
+  <text x="340" y="245" text-anchor="middle" font-size="9.5" fill="#888">Stesso oggetto (l'utente), due scopi diversi e complementari</text>
+</svg>

@@ -1,0 +1,53 @@
+<svg width="680" height="420" viewBox="0 0 680 420" xmlns="http://www.w3.org/2000/svg" font-family="Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#555" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+  <rect width="680" height="420" fill="#ffffff"/>
+
+  <text x="340" y="24" text-anchor="middle" font-size="13" font-weight="600" fill="#222">Tree — stesso namespace</text>
+
+  <rect x="270" y="35" width="140" height="40" rx="6" fill="#e7f0fd" stroke="#4a86e8" stroke-width="1"/>
+  <text x="340" y="58" text-anchor="middle" font-size="10" font-weight="600" fill="#1a3d7c">thm.local</text>
+
+  <line x1="310" y1="75" x2="200" y2="105" stroke="#999" stroke-width="1" marker-end="url(#arrow)"/>
+  <line x1="370" y1="75" x2="480" y2="105" stroke="#999" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <rect x="130" y="105" width="140" height="36" rx="6" fill="#e6f5f0" stroke="#2fa87d" stroke-width="1"/>
+  <text x="200" y="127" text-anchor="middle" font-size="9.5" fill="#1c5c42">uk.thm.local</text>
+
+  <rect x="410" y="105" width="140" height="36" rx="6" fill="#e6f5f0" stroke="#2fa87d" stroke-width="1"/>
+  <text x="480" y="127" text-anchor="middle" font-size="9.5" fill="#1c5c42">us.thm.local</text>
+
+  <line x1="30" y1="160" x2="650" y2="160" stroke="#ddd" stroke-width="1"/>
+
+  <text x="340" y="182" text-anchor="middle" font-size="13" font-weight="600" fill="#222">Forest — namespace diversi uniti insieme</text>
+
+  <rect x="110" y="195" width="150" height="36" rx="6" fill="#f2e9fb" stroke="#8e5fd6" stroke-width="1"/>
+  <text x="185" y="217" text-anchor="middle" font-size="9.5" fill="#4a2e7a">Tree: thm.local</text>
+
+  <rect x="420" y="195" width="150" height="36" rx="6" fill="#fff3d6" stroke="#d9a441" stroke-width="1"/>
+  <text x="495" y="217" text-anchor="middle" font-size="9.5" fill="#7a5a12">Tree: mht.local</text>
+
+  <line x1="260" y1="213" x2="420" y2="213" stroke="#999" stroke-width="1" stroke-dasharray="3 2"/>
+  <text x="340" y="205" text-anchor="middle" font-size="8.5" fill="#666">stessa foresta</text>
+
+  <line x1="30" y1="250" x2="650" y2="250" stroke="#ddd" stroke-width="1"/>
+
+  <text x="340" y="272" text-anchor="middle" font-size="13" font-weight="600" fill="#222">Trust unidirezionale — direzione opposta all'accesso</text>
+
+  <rect x="130" y="290" width="150" height="40" rx="6" fill="#f2f2f2" stroke="#999" stroke-width="1"/>
+  <text x="205" y="314" text-anchor="middle" font-size="10" font-weight="600" fill="#333">THM UK</text>
+
+  <rect x="400" y="290" width="150" height="40" rx="6" fill="#f2f2f2" stroke="#999" stroke-width="1"/>
+  <text x="475" y="314" text-anchor="middle" font-size="10" font-weight="600" fill="#333">MHT EU</text>
+
+  <line x1="400" y1="350" x2="290" y2="350" stroke="#e06c4f" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="340" y="342" text-anchor="middle" font-size="9" fill="#8a3a26">Trust: MHT EU si fida di THM UK</text>
+
+  <line x1="290" y1="375" x2="400" y2="375" stroke="#2fa87d" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="340" y="393" text-anchor="middle" font-size="9" fill="#1c5c42">Accesso: utente THM UK → risorse MHT EU</text>
+
+  <text x="340" y="410" text-anchor="middle" font-size="9" fill="#888">Illustrazione schematica</text>
+</svg>
