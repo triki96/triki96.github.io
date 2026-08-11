@@ -1,0 +1,45 @@
+<svg width="700" height="320" viewBox="0 0 700 320" xmlns="http://www.w3.org/2000/svg" font-family="Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#555" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+  <rect width="700" height="320" fill="#ffffff"/>
+  <text x="350" y="24" text-anchor="middle" font-size="14" font-weight="600" fill="#222">NAT — Network Address Translation</text>
+
+  <text x="150" y="50" text-anchor="middle" font-size="10.5" font-weight="600" fill="#333">Rete privata (LAN)</text>
+
+  <rect x="40" y="65" width="140" height="36" rx="6" fill="#f2f2f2" stroke="#999" stroke-width="1"/>
+  <text x="110" y="88" text-anchor="middle" font-size="9.5" fill="#333">PC A: 192.168.1.10</text>
+
+  <rect x="40" y="110" width="140" height="36" rx="6" fill="#f2f2f2" stroke="#999" stroke-width="1"/>
+  <text x="110" y="133" text-anchor="middle" font-size="9.5" fill="#333">PC B: 192.168.1.11</text>
+
+  <line x1="180" y1="90" x2="270" y2="120" stroke="#555" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <line x1="180" y1="128" x2="270" y2="128" stroke="#555" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <rect x="270" y="95" width="170" height="60" rx="8" fill="#e7f0fd" stroke="#4a86e8" stroke-width="1"/>
+  <text x="355" y="118" text-anchor="middle" font-size="10" font-weight="600" fill="#1a3d7c">Router NAT</text>
+  <text x="355" y="135" text-anchor="middle" font-size="8.5" fill="#1a3d7c">IP pubblico: 85.34.12.7</text>
+
+  <line x1="440" y1="125" x2="530" y2="125" stroke="#555" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <rect x="530" y="95" width="130" height="60" rx="6" fill="#f2f2f2" stroke="#999" stroke-width="1"/>
+  <text x="595" y="120" text-anchor="middle" font-size="9.5" fill="#333">Internet</text>
+  <text x="595" y="138" text-anchor="middle" font-size="9.5" fill="#333">server esterno</text>
+
+  <line x1="40" y1="180" x2="660" y2="180" stroke="#ddd" stroke-width="1"/>
+
+  <text x="350" y="205" text-anchor="middle" font-size="10.5" font-weight="600" fill="#222">Tabella di traduzione NAT</text>
+
+  <rect x="150" y="215" width="400" height="70" fill="#ffffff" stroke="#ccc" stroke-width="1"/>
+  <text x="165" y="232" font-size="9" font-weight="600" fill="#666">IP:porta interno</text>
+  <text x="400" y="232" font-size="9" font-weight="600" fill="#666">IP:porta pubblico</text>
+  <line x1="160" y1="238" x2="540" y2="238" stroke="#eee" stroke-width="1"/>
+  <text x="165" y="255" font-size="9" font-family="Consolas, monospace" fill="#333">192.168.1.10:51422</text>
+  <text x="400" y="255" font-size="9" font-family="Consolas, monospace" fill="#333">85.34.12.7:40001</text>
+  <text x="165" y="272" font-size="9" font-family="Consolas, monospace" fill="#333">192.168.1.11:51500</text>
+  <text x="400" y="272" font-size="9" font-family="Consolas, monospace" fill="#333">85.34.12.7:40002</text>
+
+  <text x="350" y="305" text-anchor="middle" font-size="9" fill="#888">Tutti i dispositivi della LAN condividono un solo IP pubblico, distinti per porta</text>
+</svg>

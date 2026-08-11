@@ -1,0 +1,63 @@
+<svg width="700" height="460" viewBox="0 0 700 460" xmlns="http://www.w3.org/2000/svg" font-family="Helvetica, Arial, sans-serif">
+  <rect width="700" height="460" fill="#ffffff"/>
+  <text x="350" y="24" text-anchor="middle" font-size="14" font-weight="600" fill="#222">Modello ISO/OSI vs TCP/IP e unità dati per livello</text>
+
+  <text x="150" y="48" text-anchor="middle" font-size="11" font-weight="600" fill="#333">ISO/OSI (7 livelli)</text>
+  <text x="500" y="48" text-anchor="middle" font-size="11" font-weight="600" fill="#333">TCP/IP (4 livelli)</text>
+
+  <!-- OSI layers -->
+  <rect x="40" y="58" width="220" height="34" fill="#fdece7" stroke="#e06c4f" stroke-width="1"/>
+  <text x="150" y="79" text-anchor="middle" font-size="10" fill="#8a3a26">7. Application</text>
+  <rect x="40" y="92" width="220" height="34" fill="#fdece7" stroke="#e06c4f" stroke-width="1"/>
+  <text x="150" y="113" text-anchor="middle" font-size="10" fill="#8a3a26">6. Presentation</text>
+  <rect x="40" y="126" width="220" height="34" fill="#fdece7" stroke="#e06c4f" stroke-width="1"/>
+  <text x="150" y="147" text-anchor="middle" font-size="10" fill="#8a3a26">5. Session</text>
+  <rect x="40" y="160" width="220" height="34" fill="#fff3d6" stroke="#d9a441" stroke-width="1"/>
+  <text x="150" y="181" text-anchor="middle" font-size="10" fill="#7a5a12">4. Transport</text>
+  <rect x="40" y="194" width="220" height="34" fill="#e6f5f0" stroke="#2fa87d" stroke-width="1"/>
+  <text x="150" y="215" text-anchor="middle" font-size="10" fill="#1c5c42">3. Network</text>
+  <rect x="40" y="228" width="220" height="34" fill="#e7f0fd" stroke="#4a86e8" stroke-width="1"/>
+  <text x="150" y="249" text-anchor="middle" font-size="10" fill="#1a3d7c">2. Data Link</text>
+  <rect x="40" y="262" width="220" height="34" fill="#f2e9fb" stroke="#8e5fd6" stroke-width="1"/>
+  <text x="150" y="283" text-anchor="middle" font-size="10" fill="#4a2e7a">1. Physical</text>
+
+  <!-- TCP/IP layers -->
+  <rect x="390" y="58" width="220" height="102" fill="#fdece7" stroke="#e06c4f" stroke-width="1"/>
+  <text x="500" y="113" text-anchor="middle" font-size="10.5" fill="#8a3a26">Application</text>
+  <text x="500" y="130" text-anchor="middle" font-size="8.5" fill="#8a3a26">(Application+Presentation+Session)</text>
+
+  <rect x="390" y="160" width="220" height="34" fill="#fff3d6" stroke="#d9a441" stroke-width="1"/>
+  <text x="500" y="181" text-anchor="middle" font-size="10.5" fill="#7a5a12">Transport</text>
+
+  <rect x="390" y="194" width="220" height="34" fill="#e6f5f0" stroke="#2fa87d" stroke-width="1"/>
+  <text x="500" y="215" text-anchor="middle" font-size="10.5" fill="#1c5c42">Internet</text>
+
+  <rect x="390" y="228" width="220" height="68" fill="#e7f0fd" stroke="#4a86e8" stroke-width="1"/>
+  <text x="500" y="255" text-anchor="middle" font-size="10.5" fill="#1a3d7c">Network Access</text>
+  <text x="500" y="272" text-anchor="middle" font-size="8.5" fill="#1a3d7c">(Data Link + Physical)</text>
+
+  <line x1="260" y1="75" x2="390" y2="75" stroke="#ccc" stroke-width="0.8" stroke-dasharray="2 2"/>
+  <line x1="260" y1="177" x2="390" y2="177" stroke="#ccc" stroke-width="0.8" stroke-dasharray="2 2"/>
+  <line x1="260" y1="211" x2="390" y2="211" stroke="#ccc" stroke-width="0.8" stroke-dasharray="2 2"/>
+  <line x1="260" y1="245" x2="390" y2="262" stroke="#ccc" stroke-width="0.8" stroke-dasharray="2 2"/>
+  <line x1="260" y1="279" x2="390" y2="262" stroke="#ccc" stroke-width="0.8" stroke-dasharray="2 2"/>
+
+  <line x1="40" y1="316" x2="610" y2="316" stroke="#ddd" stroke-width="1"/>
+
+  <text x="325" y="340" text-anchor="middle" font-size="11" font-weight="600" fill="#222">Nome dell'unità dati per livello</text>
+
+  <rect x="40" y="352" width="130" height="34" fill="#fdece7" stroke="#e06c4f" stroke-width="1"/>
+  <text x="105" y="373" text-anchor="middle" font-size="9.5" fill="#8a3a26">Application: Dati</text>
+
+  <rect x="180" y="352" width="130" height="34" fill="#fff3d6" stroke="#d9a441" stroke-width="1"/>
+  <text x="245" y="373" text-anchor="middle" font-size="9.5" fill="#7a5a12">Transport: Segment/Datagram</text>
+
+  <rect x="320" y="352" width="130" height="34" fill="#e6f5f0" stroke="#2fa87d" stroke-width="1"/>
+  <text x="385" y="373" text-anchor="middle" font-size="9.5" fill="#1c5c42">Network: Packet</text>
+
+  <rect x="460" y="352" width="130" height="34" fill="#e7f0fd" stroke="#4a86e8" stroke-width="1"/>
+  <text x="525" y="373" text-anchor="middle" font-size="9.5" fill="#1a3d7c">Data Link: Frame</text>
+
+  <text x="325" y="405" text-anchor="middle" font-size="9.5" fill="#666">Segment per TCP, Datagram per UDP — ogni livello incapsula il precedente</text>
+  <text x="325" y="425" text-anchor="middle" font-size="9" fill="#888">Illustrazione schematica</text>
+</svg>
