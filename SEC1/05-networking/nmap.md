@@ -7,17 +7,294 @@ description: ""
 toc: true
 ---
 
-## Cos'è
 
-## Come funziona
+## Intro
 
-### Esempio pratico
+Immagina di essere connesso a una rete e di usare vari servizi (email, web) — sorgono due domande: come scoprire quali altri dispositivi sono attivi su quella rete, e come scoprire quali servizi di rete girano su quei dispositivi (es. SSH, server web)?
 
-## Un limite importante da conoscere
+Farlo manualmente è possibile ma limitato: per una rete `192.168.0.1/24` (254 IP utilizzabili, dato che due sono riservati per rete e broadcast), si potrebbero usare strumenti come `ping` o `arp-scan`, ma ognuno ha i suoi limiti — `ping` non dà informazioni se il firewall del target blocca ICMP, mentre `arp-scan` funziona solo se ci si trova sulla stessa rete locale (Ethernet/Wi-Fi). Senza uno strumento avanzato e affidabile, sarebbe una notevole perdita di tempo.
 
-## Utilizzo
+Lo stesso vale per scoprire i servizi attivi su un host specifico: usare `telnet` porta per porta, magari con uno script che automatizza i tentativi, diventa impraticabile su migliaia di porte.
 
----
-**Modulo:** Networking
-**Room:** NMap
-**Data:**
+La soluzione a entrambi i problemi è **Nmap**, lo scanner di rete open-source pubblicato per la prima volta nel 1997: potente, flessibile, e adattabile a scenari molto diversi tra loro.
+
+> Nmap va eseguito come **root** (o con `sudo`): da utente normale è limitato a tipi di scansione fondamentali (echo ICMP, TCP connect scan).
+{: .prompt-warning }
+
+## Host Discovery
+
+### Specificare i target
+
+Nmap accetta diversi modi per indicare cosa scansionare:
+- **Range di IP** con `-`: `192.168.0.1-10` (da .1 a .10)
+- **Sottorete** con `/`: `192.168.0.1/24` (equivalente a `192.168.0.0-255`)
+- **Hostname**: es. `example.thm`
+
+### Ping scan (`-sn`)
+
+Scopre gli host attivi **senza** indagare i servizi in esecuzione — utile per essere "silenziosi" (poco rumore di rete), ma non dice nulla sui servizi.
+
+```bash
+nmap -sn 192.168.66.0/24
+```
+
+Nmap usa metodi più sofisticati del semplice `ping` per determinare se un host è attivo — non va confuso con le limitazioni di ICMP puro.
+
+### List scan (`-sL`)
+
+Elenca soltanto i target che verrebbero scansionati, **senza** scansionarli davvero — utile per confermare i target prima di lanciare la scansione vera.
+
+```bash
+nmap -sL 192.168.0.1/24
+# elenca i 256 indirizzi coinvolti
+```
+
+### Discovery più fine (`-PS`, `-PA`, `-PU`)
+
+Nmap offre anche `-PS[portlist]`, `-PA[portlist]`, `-PU[portlist]` per la discovery via TCP SYN, TCP ACK e UDP su porte specifiche — un controllo più fine rispetto al semplice `-sn`.
+
+### Forzare la scansione su host "apparentemente down" (`-Pn`)
+
+Se un target non risponde durante la fase di discovery (es. firewall che blocca ICMP), Nmap lo marca come down e **non lo scansiona affatto**. `-Pn` salta la fase di discovery e tratta tutti gli host come online, scansionandoli comunque.
+
+**Le ripercussioni pratiche di usare `-Pn` senza motivo:**
+- **Tempo sprecato**: se un host è davvero offline, ogni porta richiede comunque un timeout prima di essere marcata come tale — su un intero range, il tempo perso può essere enorme
+- **Rumore di rete e rilevabilità**: scansionare ogni host di un range (anche quelli spenti) genera molto più traffico, più facilmente notato da un IDS/IPS o da un SOC
+- **Falsi positivi nell'interpretazione**: un host realmente offline scansionato con `-Pn` risulta con porte "filtered", facilmente confuso con un firewall attivo quando invece non c'è alcun dispositivo acceso
+- **Fuori scope in un assessment autorizzato**: può consumare tempo e generare traffico oltre quanto concordato con il cliente
+
+**Esempi pratici in cui `-Pn` porta benefici reali:**
+
+1. **Firewall che blocca ICMP ma non le porte dei servizi** — un server web con ICMP bloccato ma porte 80/443 regolarmente aperte resterebbe invisibile senza `-Pn`:
+   ```bash
+   nmap -sS -Pn 192.168.1.50
+   ```
+
+2. **Silent drop configurato per policy di sicurezza** — un host con firewall che scarta pacchetti non autorizzati invece di rifiutarli esplicitamente, ma con servizi legittimi raggiungibili su porte specifiche note:
+   ```bash
+   nmap -sS -Pn -p 22,80,443 10.10.10.15
+   ```
+
+3. **Target dietro un WAF/CDN** — l'IP di origine reale di un sito protetto da Cloudflare spesso blocca ICMP da IP sconosciuti, ma le porte del servizio web restano aperte per confermare che è davvero il server origine:
+   ```bash
+   nmap -sS -Pn -p 80,443 <IP_origine_sospetto>
+   ```
+
+4. **Scansione interna post-exploitation** — in reti segmentate con policy ICMP rigide tra segmenti, ma con porte applicative specifiche autorizzate (es. un database raggiungibile da un application server):
+   ```bash
+   nmap -sS -Pn -p 5432 <IP_interno>
+   ```
+
+Il filo conduttore: in tutti questi casi **ICMP è bloccato ma il vero servizio applicativo no** — `-Pn` smaschera la discrepanza tra "sembra down" e "è effettivamente raggiungibile su una porta specifica".
+
+**La pratica consigliata**: prima una discovery normale (`-sn`) per capire quali host rispondono, poi investigare separatamente e in modo mirato solo i pochi host sospetti di essere "falsi negativi" con `-Pn`, invece di applicarlo indiscriminatamente a un intero range fin dall'inizio.
+
+## Port Scanning
+
+![Connect Scan vs SYN Scan](/assets/img/posts/nmap-connect-vs-syn-diagram.svg)
+_La differenza è solo su porte aperte: il connect scan completa l'handshake, il SYN scan lo interrompe con un RST_
+
+### Connect Scan (`-sT`)
+
+Tenta di **completare l'intero three-way handshake** con ogni porta target. Se la porta è aperta, la connessione si stabilisce con successo — e Nmap poi la chiude con un RST-ACK. È concettualmente identico a provare a connettersi manualmente con telnet a ogni porta.
+
+```bash
+nmap -sT 192.168.124.211
+```
+
+### SYN Scan / Stealth (`-sS`)
+
+Esegue **solo il primo passo** dell'handshake: manda un SYN, e se riceve un SYN-ACK (porta aperta), risponde con un **RST** invece di completare la connessione — l'handshake non si conclude mai. Genera meno log sul target, rendendolo relativamente più furtivo.
+
+```bash
+nmap -sS 192.168.124.211
+```
+
+### Scansione UDP (`-sU`)
+
+Molti servizi importanti usano UDP (DNS, DHCP, NTP, SNMP, VoIP) — utile per comunicazioni real-time che non richiedono connessione. Quando Nmap manda pacchetti a porte UDP chiuse, riceve tipicamente risposte **ICMP "port unreachable"**.
+
+```bash
+nmap -sU 192.168.124.211
+```
+
+### Limitare le porte scansionate
+
+Per default Nmap scansiona le **1000 porte più comuni**.
+
+- **`-F`** (Fast mode) — scansiona solo le 100 porte più comuni
+- **`-p[range]`** — specifica un range preciso, es. `-p10-1024`, oppure `-p-` per scansionare **tutte** le 65535 porte (equivalente a `-p1-65535`)
+- Le porte **1-1024** sono le "well-known ports" — si scansionano con `-p1-1023`
+
+### Riepilogo
+
+| Opzione | Significato |
+|---|---|
+| `-sT` | TCP connect scan — completa l'intero three-way handshake |
+| `-sS` | TCP SYN scan — solo il primo passo dell'handshake (stealth) |
+| `-sU` | Scansione UDP |
+| `-F` | Fast mode — le 100 porte più comuni |
+| `-p[range]` | Specifica un range di porte — `-p-` per scansionarle tutte |
+
+## Version Detection
+
+### OS Detection (`-O`)
+
+Fa sì che Nmap tenti di indovinare il sistema operativo del target basandosi su vari indicatori tecnici. Non è mai perfettamente accurato.
+
+```bash
+nmap -sS -O 192.168.124.211
+```
+```
+Device type: general purpose
+Running: Linux 4.X|5.X
+OS details: Linux 4.15 - 5.8
+```
+
+### Service and Version Detection (`-sV`)
+
+Identifica quale software e quale versione girano su una porta aperta — non solo "porta 22 aperta", ma "OpenSSH 8.9p1 su Ubuntu".
+
+```bash
+nmap -sS -sV 192.168.124.211
+```
+```
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 8.9p1 Ubuntu 3ubuntu0.10
+```
+
+### Combinare tutto: `-A`
+
+Attiva insieme OS detection, version detection, **traceroute**, e altre funzionalità aggiuntive, senza dover ricordare ogni opzione singolarmente.
+
+### Riepilogo
+
+| Opzione | Significato |
+|---|---|
+| `-O` | Rilevamento del sistema operativo |
+| `-sV` | Rilevamento di servizio e versione |
+| `-A` | OS detection + version detection + traceroute e altro |
+| `-Pn` | Scansiona anche gli host che sembrano offline |
+
+## Timing
+
+Uno scan a velocità normale può allertare un IDS o altre soluzioni di sicurezza — Nmap offre sei template predefiniti per controllare la velocità.
+
+### I sei template (`-T`)
+
+| Template | Numero | Velocità |
+|---|---|---|
+| paranoid | `-T0` | La più lenta, massima furtività |
+| sneaky | `-T1` | Molto lenta |
+| polite | `-T2` | Lenta, riduce il carico sulla rete |
+| normal | `-T3` | Default |
+| aggressive | `-T4` | Veloce |
+| insane | `-T5` | La più veloce, meno affidabile |
+
+**Impatto pratico sulla durata** (scansione delle 100 porte più comuni, `-sS -F`):
+
+| Timing | Durata totale |
+|---|---|
+| T0 (paranoid) | 9,8 ore |
+| T1 (sneaky) | 27,53 minuti |
+| T2 (polite) | 40,56 secondi |
+| T3 (normal) | 0,15 secondi |
+| T4 (aggressive) | 0,13 secondi |
+
+Analizzando il traffico con Wireshark: con **T0** Nmap attende 5 minuti tra un probe e il successivo; con **T1**, 15 secondi; con **T2**, 0,4 secondi; con **T3**, Nmap va alla velocità massima ritenuta sicura per quella connessione specifica.
+
+### Un template non è un solo numero
+
+`-T3` non fissa rigidamente la velocità di invio — è un **pacchetto predefinito** di più parametri interni: timeout di attesa risposta, numero massimo di retry, ritardo tra probe, range di parallelismo di default. La velocità effettiva resta gestita da un **algoritmo di controllo della congestione** che si adatta dinamicamente in base a quanto la rete risponde bene.
+
+### Controllo del parallelismo
+
+```
+--min-parallelism <numprobes>
+--max-parallelism <numprobes>
+```
+
+Controllano quante probe TCP/UDP simultanee Nmap mantiene attive per un gruppo di host. Per default regolate automaticamente: possono scendere a **1** se la rete perde pacchetti, o arrivare a **centinaia** su una rete ottima.
+
+### Controllo del rate
+
+```
+--min-rate <number>
+--max-rate <number>
+```
+
+Controllano direttamente la velocità di invio, in pacchetti al secondo. Il rate specificato si applica all'**intera scansione**, non a un singolo host.
+
+### Perché combinare `-T3` con `--min-rate`/`--max-rate`
+
+`--min-rate`/`--max-rate` **non fanno parte** del pacchetto T3 — sono un controllo esplicito che **ha la precedenza** sull'algoritmo adattivo di Nmap.
+
+```bash
+nmap -sS -T3 --min-rate 500 192.168.1.0/24
+```
+
+Qui `-T3` imposta il profilo bilanciato per timeout/retry/parallelismo, mentre `--min-rate 500` forza Nmap a **non scendere mai** sotto quella velocità, anche se l'algoritmo adattivo vorrebbe rallentare per qualche pacchetto perso — utile quando si sa che occasionali perdite di pacchetti sono normali e non si vuole che Nmap diventi eccessivamente conservativo.
+
+```bash
+nmap -sS -T4 --max-rate 100 192.168.1.0/24
+```
+
+Al contrario, si può prendere la reattività generale di `-T4` ma **limitare** comunque la velocità massima, se si vuole evitare di generare traffico troppo rumoroso o rischiare di sovraccaricare un dispositivo fragile lungo il percorso.
+
+### Timeout per host
+
+```
+--host-timeout <time>
+```
+
+Specifica il tempo massimo di attesa per un singolo host — utile per host lenti o con connessioni di rete scadenti, per evitare che lo scan resti bloccato indefinitamente su un target problematico.
+
+### Riepilogo
+
+| Opzione | Significato |
+|---|---|
+| `-T<0-5>` | Template di timing: paranoid(0) → insane(5) |
+| `--min-parallelism` / `--max-parallelism` | Numero minimo/massimo di probe parallele |
+| `--min-rate` / `--max-rate` | Velocità minima/massima (pacchetti al secondo) |
+| `--host-timeout` | Tempo massimo di attesa per un host target |
+
+## Verbosity
+
+Controlla quanta informazione extra Nmap mostra **mentre** lo scan è in corso, oltre al solo risultato finale. Per default Nmap è silenzioso: si lancia il comando e si aspetta il risultato completo alla fine.
+
+```bash
+nmap -sS 192.168.1.0/24              # output minimo, solo risultato finale
+nmap -v -sS 192.168.1.0/24           # più dettagli in tempo reale
+nmap -vv -sS 192.168.1.0/24          # ancora più dettagli (livelli incrementali)
+```
+
+Con `-v` attivo, Nmap mostra: quando la fase di host discovery è completata e quanti host sono attivi, aggiornamenti periodici sull'avanzamento durante scan lunghi, e le porte trovate aperte man mano che vengono scoperte.
+
+Il livello è incrementale, fino a `-vvvv`/`-v4`.
+
+## Debug
+
+Va molto più a fondo della verbosity — mostra informazioni **interne al funzionamento di Nmap stesso**, utili più per capire *come* Nmap prende le proprie decisioni che per seguire l'avanzamento dello scan.
+
+```bash
+nmap -d -sS 192.168.1.10             # debug livello 1
+nmap -dd -sS 192.168.1.10            # debug livello 2
+```
+
+Con `-d` attivo si vedono: i dettagli del timing adattivo (perché Nmap ha rallentato o accelerato in un certo momento), decisioni interne sul parallelismo, dettagli grezzi sui pacchetti inviati/ricevuti a un livello molto tecnico.
+
+### Verbosity vs Debug
+
+| | Verbosity (`-v`) | Debug (`-d`) |
+|---|---|---|
+| A cosa serve | Seguire il progresso dello scan in tempo reale | Capire il comportamento interno/le decisioni di Nmap |
+| Pubblico tipico | Chiunque voglia vedere risultati parziali man mano | Chi sta risolvendo un problema con lo scan stesso |
+| Volume di output | Moderato, leggibile | Molto elevato, tecnico |
+
+**Verbosity** è utile quasi sempre su scan lunghi (es. `-p-` su un intero range, o con timing lento come `-T1`) — dice se lo scan sta procedendo o sembra bloccato, mostrando risultati parziali senza aspettare la fine.
+
+**Debug** è utile quando qualcosa non torna nei risultati — ad esempio se uno scan sembra più lento del previsto anche con `-T4`, il debug può rivelare che Nmap ha rilevato perdita di pacchetti e sta rallentando automaticamente, un'informazione altrimenti nascosta.
+
+> Su una scansione ampia (es. un intero `/24` con `-p-`), l'output con `-dd` diventa rapidamente enorme e difficile da leggere a schermo. Conviene reindirizzarlo su file:
+> `nmap -dd -sS -p- 192.168.1.0/24 > scan_debug.log`
+{: .prompt-tip }

@@ -1,0 +1,50 @@
+<svg width="680" height="360" viewBox="0 0 680 360" xmlns="http://www.w3.org/2000/svg" font-family="Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#555" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+  <rect width="680" height="360" fill="#ffffff"/>
+  <text x="340" y="24" text-anchor="middle" font-size="14" font-weight="600" fill="#222">Connect Scan (-sT) vs SYN Scan (-sS)</text>
+
+  <text x="170" y="48" text-anchor="middle" font-size="11" font-weight="600" fill="#333">-sT Connect Scan</text>
+  <rect x="40" y="60" width="120" height="34" rx="6" fill="#f2f2f2" stroke="#999" stroke-width="1"/>
+  <text x="100" y="81" text-anchor="middle" font-size="9.5" fill="#333">Nmap</text>
+  <rect x="200" y="60" width="120" height="34" rx="6" fill="#e7f0fd" stroke="#4a86e8" stroke-width="1"/>
+  <text x="260" y="81" text-anchor="middle" font-size="9.5" fill="#1a3d7c">Porta target</text>
+
+  <line x1="100" y1="105" x2="260" y2="105" stroke="#555" stroke-width="1.1" marker-end="url(#arrow)"/>
+  <text x="180" y="100" text-anchor="middle" font-size="8.5" fill="#555">SYN</text>
+  <line x1="260" y1="125" x2="100" y2="125" stroke="#555" stroke-width="1.1" marker-end="url(#arrow)"/>
+  <text x="180" y="120" text-anchor="middle" font-size="8.5" fill="#555">SYN-ACK</text>
+  <line x1="100" y1="145" x2="260" y2="145" stroke="#555" stroke-width="1.1" marker-end="url(#arrow)"/>
+  <text x="180" y="140" text-anchor="middle" font-size="8.5" fill="#555">ACK</text>
+  <text x="180" y="165" text-anchor="middle" font-size="8.5" fill="#2fa87d" font-weight="600">Handshake completo</text>
+  <line x1="100" y1="185" x2="260" y2="185" stroke="#e06c4f" stroke-width="1.1" marker-end="url(#arrow)"/>
+  <text x="180" y="180" text-anchor="middle" font-size="8.5" fill="#8a3a26">RST-ACK (chiude)</text>
+
+  <line x1="340" y1="50" x2="340" y2="330" stroke="#ddd" stroke-width="1"/>
+
+  <text x="510" y="48" text-anchor="middle" font-size="11" font-weight="600" fill="#333">-sS SYN Scan (stealth)</text>
+  <rect x="380" y="60" width="120" height="34" rx="6" fill="#f2f2f2" stroke="#999" stroke-width="1"/>
+  <text x="440" y="81" text-anchor="middle" font-size="9.5" fill="#333">Nmap</text>
+  <rect x="540" y="60" width="120" height="34" rx="6" fill="#e6f5f0" stroke="#2fa87d" stroke-width="1"/>
+  <text x="600" y="81" text-anchor="middle" font-size="9.5" fill="#1c5c42">Porta target</text>
+
+  <line x1="440" y1="105" x2="600" y2="105" stroke="#555" stroke-width="1.1" marker-end="url(#arrow)"/>
+  <text x="520" y="100" text-anchor="middle" font-size="8.5" fill="#555">SYN</text>
+  <line x1="600" y1="125" x2="440" y2="125" stroke="#555" stroke-width="1.1" marker-end="url(#arrow)"/>
+  <text x="520" y="120" text-anchor="middle" font-size="8.5" fill="#555">SYN-ACK</text>
+  <line x1="440" y1="145" x2="600" y2="145" stroke="#e06c4f" stroke-width="1.1" marker-end="url(#arrow)"/>
+  <text x="520" y="140" text-anchor="middle" font-size="8.5" fill="#8a3a26">RST (invece di ACK)</text>
+  <text x="520" y="165" text-anchor="middle" font-size="8.5" fill="#8a3a26" font-weight="600">Handshake MAI completato</text>
+
+  <text x="170" y="220" text-anchor="middle" font-size="9" fill="#666">Connessione stabilita e chiusa</text>
+  <text x="170" y="236" text-anchor="middle" font-size="9" fill="#666">→ più log sul target</text>
+
+  <text x="520" y="220" text-anchor="middle" font-size="9" fill="#666">Nessuna vera connessione</text>
+  <text x="520" y="236" text-anchor="middle" font-size="9" fill="#666">→ relativamente più "furtivo"</text>
+
+  <text x="340" y="290" text-anchor="middle" font-size="9.5" fill="#555">In entrambi i casi, una porta CHIUSA risponde subito con RST-ACK</text>
+  <text x="340" y="308" text-anchor="middle" font-size="9.5" fill="#555">(lo scambio è identico per porte chiuse, la differenza è solo su porte APERTE)</text>
+</svg>

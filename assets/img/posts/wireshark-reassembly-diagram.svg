@@ -1,0 +1,33 @@
+<svg width="680" height="280" viewBox="0 0 680 280" xmlns="http://www.w3.org/2000/svg" font-family="Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#555" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+  <rect width="680" height="280" fill="#ffffff"/>
+  <text x="340" y="24" text-anchor="middle" font-size="14" font-weight="600" fill="#222">Riassemblaggio: perché a volte è TCP, a volte HTTP</text>
+
+  <rect x="40" y="50" width="140" height="40" rx="6" fill="#fff3d6" stroke="#d9a441" stroke-width="1"/>
+  <text x="110" y="70" text-anchor="middle" font-size="9.5" fill="#7a5a12">Pacchetto 1</text>
+  <text x="110" y="84" text-anchor="middle" font-size="8.5" fill="#7a5a12">TCP · Len 188</text>
+
+  <rect x="200" y="50" width="140" height="40" rx="6" fill="#fff3d6" stroke="#d9a441" stroke-width="1"/>
+  <text x="270" y="70" text-anchor="middle" font-size="9.5" fill="#7a5a12">Pacchetto 2</text>
+  <text x="270" y="84" text-anchor="middle" font-size="8.5" fill="#7a5a12">TCP · Len 1200</text>
+
+  <rect x="360" y="50" width="140" height="40" rx="6" fill="#e6f5f0" stroke="#2fa87d" stroke-width="1"/>
+  <text x="430" y="70" text-anchor="middle" font-size="9.5" fill="#1c5c42">Pacchetto 3</text>
+  <text x="430" y="84" text-anchor="middle" font-size="8.5" fill="#1c5c42">HTTP · completo</text>
+
+  <text x="270" y="115" text-anchor="middle" font-size="9" fill="#666">Nessuno dei singoli frammenti è un messaggio HTTP valido da solo</text>
+
+  <line x1="110" y1="130" x2="330" y2="170" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+  <line x1="270" y1="130" x2="330" y2="170" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+  <line x1="430" y1="130" x2="330" y2="170" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <rect x="180" y="180" width="300" height="60" rx="8" fill="#e7f0fd" stroke="#4a86e8" stroke-width="1"/>
+  <text x="330" y="205" text-anchor="middle" font-size="10.5" font-weight="600" fill="#1a3d7c">Wireshark riassembla</text>
+  <text x="330" y="223" text-anchor="middle" font-size="9" fill="#1a3d7c">solo l'ultimo pacchetto mostra "HTTP" completo</text>
+
+  <text x="340" y="265" text-anchor="middle" font-size="9" fill="#888">Follow HTTP Stream / Export Objects ricompongono comunque tutto</text>
+</svg>
