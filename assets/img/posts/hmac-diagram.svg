@@ -1,0 +1,49 @@
+<svg width="680" height="400" viewBox="0 0 680 400" xmlns="http://www.w3.org/2000/svg" font-family="Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#555" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+  <rect width="680" height="400" fill="#ffffff"/>
+  <text x="340" y="24" text-anchor="middle" font-size="14" font-weight="600" fill="#222">Come funziona HMAC</text>
+
+  <rect x="270" y="40" width="140" height="36" rx="6" fill="#f2f2f2" stroke="#999" stroke-width="1"/>
+  <text x="340" y="62" text-anchor="middle" font-size="10" font-weight="600" fill="#333">Chiave segreta</text>
+
+  <line x1="340" y1="76" x2="340" y2="98" stroke="#555" stroke-width="1.1" marker-end="url(#arrow)"/>
+  <text x="420" y="90" text-anchor="middle" font-size="8.5" fill="#666">1. Padding al block size</text>
+
+  <rect x="270" y="100" width="140" height="34" rx="6" fill="#e7f0fd" stroke="#4a86e8" stroke-width="1"/>
+  <text x="340" y="121" text-anchor="middle" font-size="9.5" fill="#1a3d7c">Chiave paddata</text>
+
+  <line x1="270" y1="117" x2="150" y2="150" stroke="#555" stroke-width="1.1" marker-end="url(#arrow)"/>
+  <line x1="410" y1="117" x2="530" y2="150" stroke="#555" stroke-width="1.1" marker-end="url(#arrow)"/>
+
+  <rect x="60" y="152" width="180" height="34" rx="6" fill="#e6f5f0" stroke="#2fa87d" stroke-width="1"/>
+  <text x="150" y="173" text-anchor="middle" font-size="9" fill="#1c5c42">XOR con costante ipad</text>
+
+  <rect x="440" y="152" width="180" height="34" rx="6" fill="#fff3d6" stroke="#d9a441" stroke-width="1"/>
+  <text x="530" y="173" text-anchor="middle" font-size="9" fill="#7a5a12">XOR con costante opad</text>
+
+  <line x1="150" y1="186" x2="150" y2="208" stroke="#555" stroke-width="1.1" marker-end="url(#arrow)"/>
+  <text x="150" y="200" text-anchor="middle" font-size="8" fill="#666">2</text>
+
+  <rect x="60" y="210" width="180" height="50" rx="6" fill="#e6f5f0" stroke="#2fa87d" stroke-width="1"/>
+  <text x="150" y="230" text-anchor="middle" font-size="9" font-weight="600" fill="#1c5c42">Hash(chiave XOR ipad + messaggio)</text>
+  <text x="150" y="248" text-anchor="middle" font-size="8" fill="#1c5c42">3. Prima passata di hashing</text>
+
+  <line x1="240" y1="235" x2="440" y2="235" stroke="#555" stroke-width="1.1" marker-end="url(#arrow)"/>
+  <text x="340" y="228" text-anchor="middle" font-size="8" fill="#666">risultato usato come "messaggio"</text>
+
+  <rect x="440" y="210" width="180" height="50" rx="6" fill="#fdece7" stroke="#e06c4f" stroke-width="1"/>
+  <text x="530" y="230" text-anchor="middle" font-size="9" font-weight="600" fill="#8a3a26">Hash(chiave XOR opad + risultato)</text>
+  <text x="530" y="248" text-anchor="middle" font-size="8" fill="#8a3a26">4. Seconda passata di hashing</text>
+
+  <line x1="530" y1="260" x2="530" y2="290" stroke="#555" stroke-width="1.1" marker-end="url(#arrow)"/>
+
+  <rect x="410" y="292" width="240" height="40" rx="8" fill="#f2e9fb" stroke="#8e5fd6" stroke-width="1"/>
+  <text x="530" y="317" text-anchor="middle" font-size="10" font-weight="600" fill="#4a2e7a">5. Valore HMAC finale</text>
+
+  <text x="340" y="365" text-anchor="middle" font-size="9.5" fill="#666">Solo chi conosce la chiave segreta può generare/verificare l'HMAC corretto</text>
+  <text x="340" y="382" text-anchor="middle" font-size="9" fill="#888">Illustrazione schematica</text>
+</svg>
