@@ -1,0 +1,57 @@
+<svg viewBox="0 0 900 380" xmlns="http://www.w3.org/2000/svg" font-family="Helvetica, Arial, sans-serif">
+  <rect width="900" height="380" fill="#FAFAF8"/>
+
+  <text x="450" y="38" text-anchor="middle" font-size="20" font-weight="700" fill="#1B1D1F">Primary Key e Foreign Key</text>
+
+  <!-- Table 1: autori -->
+  <g>
+    <text x="185" y="80" text-anchor="middle" font-size="16" font-weight="600" fill="#1B1D1F">autori</text>
+    <rect x="70" y="95" width="230" height="140" rx="6" fill="#ffffff" stroke="#3F7268" stroke-width="2"/>
+    <rect x="70" y="95" width="230" height="34" fill="#3F7268"/>
+    <text x="130" y="117" text-anchor="middle" font-size="13" fill="#ffffff" font-weight="600">id (PK)</text>
+    <text x="245" y="117" text-anchor="middle" font-size="13" fill="#ffffff" font-weight="600">nome</text>
+    <line x1="185" y1="95" x2="185" y2="235" stroke="#D8D1BE" stroke-width="1.5"/>
+    <line x1="70" y1="163" x2="300" y2="163" stroke="#D8D1BE" stroke-width="1.5"/>
+    <line x1="70" y1="199" x2="300" y2="199" stroke="#D8D1BE" stroke-width="1.5"/>
+    <text x="130" y="147" text-anchor="middle" font-size="13" fill="#1B1D1F" font-weight="700">1</text>
+    <text x="245" y="147" text-anchor="middle" font-size="13" fill="#1B1D1F">Italo Calvino</text>
+    <text x="130" y="183" text-anchor="middle" font-size="13" fill="#1B1D1F" font-weight="700">2</text>
+    <text x="245" y="183" text-anchor="middle" font-size="13" fill="#1B1D1F">Primo Levi</text>
+    <text x="130" y="219" text-anchor="middle" font-size="13" fill="#1B1D1F" font-weight="700">3</text>
+    <text x="245" y="219" text-anchor="middle" font-size="13" fill="#1B1D1F">Elsa Morante</text>
+  </g>
+
+  <!-- Table 2: libri -->
+  <g>
+    <text x="655" y="80" text-anchor="middle" font-size="16" font-weight="600" fill="#1B1D1F">libri</text>
+    <rect x="480" y="95" width="360" height="140" rx="6" fill="#ffffff" stroke="#C99A3D" stroke-width="2"/>
+    <rect x="480" y="95" width="360" height="34" fill="#C99A3D"/>
+    <text x="530" y="117" text-anchor="middle" font-size="13" fill="#ffffff" font-weight="600">id (PK)</text>
+    <text x="660" y="117" text-anchor="middle" font-size="13" fill="#ffffff" font-weight="600">titolo</text>
+    <text x="790" y="117" text-anchor="middle" font-size="13" fill="#ffffff" font-weight="600">autore_id (FK)</text>
+    <line x1="580" y1="95" x2="580" y2="235" stroke="#D8D1BE" stroke-width="1.5"/>
+    <line x1="740" y1="95" x2="740" y2="235" stroke="#D8D1BE" stroke-width="1.5"/>
+    <line x1="480" y1="163" x2="840" y2="163" stroke="#D8D1BE" stroke-width="1.5"/>
+    <line x1="480" y1="199" x2="840" y2="199" stroke="#D8D1BE" stroke-width="1.5"/>
+    <text x="530" y="147" text-anchor="middle" font-size="13" fill="#1B1D1F">101</text>
+    <text x="660" y="147" text-anchor="middle" font-size="13" fill="#1B1D1F">Il barone rampante</text>
+    <text x="790" y="147" text-anchor="middle" font-size="13" fill="#B6553C" font-weight="700">1</text>
+    <text x="530" y="183" text-anchor="middle" font-size="13" fill="#1B1D1F">102</text>
+    <text x="660" y="183" text-anchor="middle" font-size="13" fill="#1B1D1F">Se questo è un uomo</text>
+    <text x="790" y="183" text-anchor="middle" font-size="13" fill="#B6553C" font-weight="700">2</text>
+    <text x="530" y="219" text-anchor="middle" font-size="13" fill="#1B1D1F">103</text>
+    <text x="660" y="219" text-anchor="middle" font-size="13" fill="#1B1D1F">La Storia</text>
+    <text x="790" y="219" text-anchor="middle" font-size="13" fill="#B6553C" font-weight="700">3</text>
+  </g>
+
+  <!-- Arrows FK -> PK -->
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#B6553C"/>
+    </marker>
+  </defs>
+  <path d="M 790 156 C 700 260, 250 260, 130 156" fill="none" stroke="#B6553C" stroke-width="2" stroke-dasharray="5,4" marker-end="url(#arrow)"/>
+
+  <text x="450" y="300" text-anchor="middle" font-size="13" fill="#5B5A52">autore_id in "libri" fa riferimento a id in "autori"</text>
+  <text x="450" y="322" text-anchor="middle" font-size="13" fill="#5B5A52">la Foreign Key collega le due tabelle tramite la Primary Key</text>
+</svg>

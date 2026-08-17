@@ -9,9 +9,7 @@ toc: true
 
 ## Intro
 
-### Perché non si cifrano le password (invece di hasharle)
-
-Considerando il problema di salvare le password per l'autenticazione, viene naturale chiedersi: perché non **cifrarle** invece di tutti questi passaggi macchinosi con l'hashing? Il motivo è che, anche scegliendo un algoritmo di cifratura sicuro, servirebbe comunque **conservare la chiave** usata per cifrarle. Di conseguenza, se qualcuno ottenesse quella chiave, potrebbe decifrare **tutte** le password in un colpo solo — l'hashing, essendo una funzione a senso unico (non invertibile), non ha questo punto debole strutturale.
+Considerando il problema di salvare una password, viene naturale chiedersi: perché non cifrarla? Il motivo è che, anche scegliendo un algoritmo di cifratura sicuro, servirebbe comunque **conservare la chiave** usata per cifrarle. Da qui la necessità delle funzioni di Hash.
 
 ### Linux: /etc/shadow e il formato dell'hash
 
@@ -40,6 +38,8 @@ Le password di Windows sono hashate con **NTLM**, una variante di MD4 — visiva
 
 Su Windows, gli hash sono salvati nel **SAM (Security Accounts Manager)**. Windows cerca di impedire agli utenti normali di estrarli, ma strumenti come **mimikatz** esistono proprio per aggirare questa protezione. Gli hash trovati lì sono divisi in **NT hash** e **LM hash**.
 
+## Attacchi
+
 ### Craccare hash offline con Hashcat
 
 La sintassi base:
@@ -62,17 +62,13 @@ Per vedere il risultato in seguito (Hashcat salva la sessione e non sempre stamp
 hashcat -m 3200 hash.txt --show
 ```
 
-## Rainbow Tables
-
-### Cosa sono
+### Rainbow Tables
 
 Una **rainbow table** è una struttura dati precalcolata che contiene un enorme numero di coppie **password → hash corrispondente**, generata in anticipo, una volta sola. Invece di calcolare l'hash di ogni tentativo di password durante l'attacco (come fa un attacco a dizionario classico), un attaccante consulta semplicemente la tabella già pronta, cercando l'hash rubato tra quelli presenti — un'operazione molto più veloce di ricalcolare milioni di hash al volo.
 
-### A cosa servono
-
 Il vantaggio per l'attaccante è la **velocità**: generare una rainbow table richiede tempo e risorse significative una tantum, ma una volta creata può essere riutilizzata per craccare **qualsiasi** hash che rientri nel suo dominio di copertura, in una frazione del tempo che servirebbe per un attacco a forza bruta o a dizionario tradizionale ripetuto ogni volta. Esistono rainbow table pubbliche già pronte per gli algoritmi di hashing più comuni e non protetti (es. MD5, SHA-1 senza salt), scaricabili e utilizzabili direttamente.
 
-### Come proteggersi: il salting
+## Il salting
 
 Il **salt** è un valore casuale, unico per ogni password, aggiunto alla password stessa **prima** di calcolarne l'hash. È esattamente il componente che si vede nel formato `$prefix$options$salt$hash` di `/etc/shadow` visto sopra: ogni utente ha un salt diverso, anche se avesse scelto la stessa identica password di un altro utente.
 
@@ -85,13 +81,9 @@ Questo rende le rainbow table **inefficaci**: una tabella precalcolata è costru
 
 ## HMAC
 
-### Cos'è
-
 **HMAC** (Keyed-Hash Message Authentication Code) è un tipo di codice di autenticazione del messaggio (MAC) che combina una funzione di hash crittografica con una **chiave segreta**, per verificare sia l'**autenticità** sia l'**integrità** dei dati.
 
 Un HMAC permette di confermare che chi ha creato quel codice sia davvero chi dice di essere (autenticità), e prova che il messaggio non è stato modificato o corrotto (integrità) — ottenuto combinando una chiave segreta (per l'autenticità) con un algoritmo di hashing (per generare l'hash che garantisce l'integrità).
-
-### Come funziona
 
 ![Come funziona HMAC](/assets/img/posts/hmac-diagram.svg)
 _Due passate di hashing, con la chiave combinata a due costanti diverse (ipad e opad)_
@@ -104,12 +96,3 @@ I passaggi, in sintesi:
 5. L'output finale è il valore **HMAC**, tipicamente una stringa di dimensione fissa
 
 Il fatto che servano **due passate di hashing**, ciascuna con la chiave combinata a una costante diversa, è una scelta di design che protegge da specifiche debolezze strutturali delle funzioni di hash sottostanti — solo chi conosce la chiave segreta può generare (o verificare) l'HMAC corretto per un dato messaggio.
-
-## Utilizzo
-
-Questi tre argomenti si intrecciano nella pratica: sapere riconoscere il tipo di hash dal suo prefisso (Linux) o dal contesto (Windows NTLM) è il primo passo per scegliere il tipo `-m` corretto in Hashcat durante un tentativo di cracking offline; capire perché il salting rende le rainbow table inefficaci aiuta a valutare quanto sia realistico un attacco di questo tipo contro un sistema target; e HMAC, pur non essendo direttamente legato al salvataggio delle password, condivide lo stesso principio di fondo — usare l'hashing non solo per nascondere un valore, ma per garantirne autenticità e integrità in modo verificabile da chi possiede la chiave giusta, un concetto che ritorna spesso in API, token di sessione, e protocolli di autenticazione moderni.
-
----
-**Modulo:** A Journey into Cybersecurity
-**Room:** 
-**Data:** 13 agosto 2026

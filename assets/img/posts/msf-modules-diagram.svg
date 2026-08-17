@@ -1,0 +1,28 @@
+<svg width="680" height="290" viewBox="0 0 680 290" xmlns="http://www.w3.org/2000/svg" font-family="Helvetica, Arial, sans-serif">
+  <rect width="680" height="290" fill="#ffffff"/>
+  <text x="340" y="24" text-anchor="middle" font-size="14" font-weight="600" fill="#222">I moduli di Metasploit</text>
+  
+  <rect x="30" y="50" width="140" height="60" rx="8" fill="#fdece7" stroke="#e06c4f" stroke-width="1"/>
+  <text x="100" y="75" text-anchor="middle" font-size="10.5" font-weight="600" fill="#8a3a26">Exploit</text>
+  <text x="100" y="93" text-anchor="middle" font-size="8" fill="#8a3a26">sfrutta la vulnerabilità</text>
+
+  <rect x="185" y="50" width="140" height="60" rx="8" fill="#e7f0fd" stroke="#4a86e8" stroke-width="1"/>
+  <text x="255" y="75" text-anchor="middle" font-size="10.5" font-weight="600" fill="#1a3d7c">Payload</text>
+  <text x="255" y="93" text-anchor="middle" font-size="8" fill="#1a3d7c">cosa viene eseguito</text>
+
+  <rect x="340" y="50" width="140" height="60" rx="8" fill="#e6f5f0" stroke="#2fa87d" stroke-width="1"/>
+  <text x="410" y="75" text-anchor="middle" font-size="10.5" font-weight="600" fill="#1c5c42">Auxiliary</text>
+  <text x="410" y="93" text-anchor="middle" font-size="8" fill="#1c5c42">enumerazione, scanner</text>
+
+  <rect x="495" y="50" width="150" height="60" rx="8" fill="#fff3d6" stroke="#d9a441" stroke-width="1"/>
+  <text x="570" y="75" text-anchor="middle" font-size="10.5" font-weight="600" fill="#7a5a12">Post</text>
+  <text x="570" y="93" text-anchor="middle" font-size="8" fill="#7a5a12">dopo l'accesso</text>
+
+  <rect x="255" y="140" width="170" height="60" rx="8" fill="#f2e9fb" stroke="#8e5fd6" stroke-width="1"/>
+  <text x="340" y="165" text-anchor="middle" font-size="10.5" font-weight="600" fill="#4a2e7a">Encoder</text>
+  <text x="340" y="183" text-anchor="middle" font-size="8" fill="#4a2e7a">evasione antivirus/EDR</text>
+
+  <text x="340" y="240" text-anchor="middle" font-size="9.5" fill="#666">Ogni fase dell'assessment (enumerazione, sfruttamento, post-exploitation)</text>
+  <text x="340" y="258" text-anchor="middle" font-size="9.5" fill="#666">corrisponde a un tipo di modulo diverso all'interno dello stesso framework</text>
+
+</svg>

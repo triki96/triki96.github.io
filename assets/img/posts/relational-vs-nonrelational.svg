@@ -1,0 +1,62 @@
+<svg viewBox="0 0 900 420" xmlns="http://www.w3.org/2000/svg" font-family="Helvetica, Arial, sans-serif">
+  <rect width="900" height="420" fill="#FAFAF8"/>
+
+  <!-- Titles -->
+  <text x="220" y="40" text-anchor="middle" font-size="22" font-weight="700" fill="#1B1D1F">Relazionale (SQL)</text>
+  <text x="680" y="40" text-anchor="middle" font-size="22" font-weight="700" fill="#1B1D1F">Non relazionale (NoSQL)</text>
+
+  <!-- LEFT: Relational table -->
+  <g>
+    <rect x="70" y="70" width="300" height="180" rx="6" fill="#ffffff" stroke="#3F7268" stroke-width="2"/>
+    <!-- header row -->
+    <rect x="70" y="70" width="300" height="36" fill="#3F7268"/>
+    <text x="145" y="93" text-anchor="middle" font-size="14" fill="#ffffff" font-weight="600">id</text>
+    <text x="245" y="93" text-anchor="middle" font-size="14" fill="#ffffff" font-weight="600">nome</text>
+    <text x="335" y="93" text-anchor="middle" font-size="14" fill="#ffffff" font-weight="600">ruolo</text>
+
+    <!-- grid lines -->
+    <line x1="190" y1="70" x2="190" y2="250" stroke="#D8D1BE" stroke-width="1.5"/>
+    <line x1="300" y1="70" x2="300" y2="250" stroke="#D8D1BE" stroke-width="1.5"/>
+    <line x1="70" y1="142" x2="370" y2="142" stroke="#D8D1BE" stroke-width="1.5"/>
+    <line x1="70" y1="196" x2="370" y2="196" stroke="#D8D1BE" stroke-width="1.5"/>
+
+    <!-- row 1 -->
+    <text x="145" y="124" text-anchor="middle" font-size="13" fill="#1B1D1F">1</text>
+    <text x="245" y="124" text-anchor="middle" font-size="13" fill="#1B1D1F">Ada</text>
+    <text x="335" y="124" text-anchor="middle" font-size="13" fill="#1B1D1F">admin</text>
+    <!-- row 2 -->
+    <text x="145" y="174" text-anchor="middle" font-size="13" fill="#1B1D1F">2</text>
+    <text x="245" y="174" text-anchor="middle" font-size="13" fill="#1B1D1F">Bruno</text>
+    <text x="335" y="174" text-anchor="middle" font-size="13" fill="#1B1D1F">user</text>
+    <!-- row 3 -->
+    <text x="145" y="224" text-anchor="middle" font-size="13" fill="#1B1D1F">3</text>
+    <text x="245" y="224" text-anchor="middle" font-size="13" fill="#1B1D1F">Cira</text>
+    <text x="335" y="224" text-anchor="middle" font-size="13" fill="#1B1D1F">user</text>
+  </g>
+  <text x="220" y="285" text-anchor="middle" font-size="13" fill="#5B5A52">Schema fisso, righe e colonne</text>
+  <text x="220" y="304" text-anchor="middle" font-size="13" fill="#5B5A52">Esempi: MySQL, PostgreSQL, Oracle</text>
+
+  <!-- RIGHT: Non-relational documents -->
+  <g>
+    <!-- doc 1 -->
+    <rect x="540" y="70" width="280" height="70" rx="6" fill="#ffffff" stroke="#C99A3D" stroke-width="2"/>
+    <text x="555" y="90" font-size="12" fill="#1B1D1F" font-family="monospace">{ "id": 1,</text>
+    <text x="565" y="106" font-size="12" fill="#1B1D1F" font-family="monospace">"nome": "Ada",</text>
+    <text x="565" y="122" font-size="12" fill="#1B1D1F" font-family="monospace">"ruolo": "admin" }</text>
+
+    <!-- doc 2 -->
+    <rect x="540" y="155" width="280" height="70" rx="6" fill="#ffffff" stroke="#C99A3D" stroke-width="2"/>
+    <text x="555" y="175" font-size="12" fill="#1B1D1F" font-family="monospace">{ "id": 2,</text>
+    <text x="565" y="191" font-size="12" fill="#1B1D1F" font-family="monospace">"nome": "Bruno",</text>
+    <text x="565" y="207" font-size="12" fill="#1B1D1F" font-family="monospace">"tags": ["user","beta"] }</text>
+  </g>
+  <text x="680" y="285" text-anchor="middle" font-size="13" fill="#5B5A52">Schema flessibile, documenti/coppie chiave-valore</text>
+  <text x="680" y="304" text-anchor="middle" font-size="13" fill="#5B5A52">Esempi: MongoDB, Redis, Cassandra</text>
+
+  <!-- VS divider -->
+  <circle cx="450" cy="160" r="26" fill="#1B1D1F"/>
+  <text x="450" y="166" text-anchor="middle" font-size="14" fill="#ffffff" font-weight="700">VS</text>
+
+  <!-- bottom caption -->
+  <text x="450" y="380" text-anchor="middle" font-size="13" fill="#5B5A52">Il relazionale impone una struttura rigida e coerente; il non relazionale si adatta a dati variabili</text>
+</svg>

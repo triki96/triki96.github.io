@@ -10,9 +10,9 @@ toc: true
 
 ## Intro
 
-Immagina di essere connesso a una rete e di usare vari servizi (email, web) — sorgono due domande: come scoprire quali altri dispositivi sono attivi su quella rete, e come scoprire quali servizi di rete girano su quei dispositivi (es. SSH, server web)?
+Supponiamo di essere connessi a una rete: come scopriamo quali altri dispositivi sono attivi su quella rete, e come scopriamo quali servizi di rete girano su quei dispositivi (es. SSH, server web)?
 
-Farlo manualmente è possibile ma limitato: per una rete `192.168.0.1/24` (254 IP utilizzabili, dato che due sono riservati per rete e broadcast), si potrebbero usare strumenti come `ping` o `arp-scan`, ma ognuno ha i suoi limiti — `ping` non dà informazioni se il firewall del target blocca ICMP, mentre `arp-scan` funziona solo se ci si trova sulla stessa rete locale (Ethernet/Wi-Fi). Senza uno strumento avanzato e affidabile, sarebbe una notevole perdita di tempo.
+Farlo manualmente è possibile ma limitato: per una rete `192.168.0.0/24` (254 IP utilizzabili, dato che due sono riservati per rete e broadcast), si potrebbero usare strumenti come `ping` o `arp-scan`, ma ognuno ha i suoi limiti — `ping` non dà informazioni se il firewall del target blocca ICMP, mentre `arp-scan` funziona solo se ci si trova sulla stessa rete locale (Ethernet/Wi-Fi). Senza uno strumento avanzato e affidabile, sarebbe una notevole perdita di tempo.
 
 Lo stesso vale per scoprire i servizi attivi su un host specifico: usare `telnet` porta per porta, magari con uno script che automatizza i tentativi, diventa impraticabile su migliaia di porte.
 
@@ -27,8 +27,17 @@ La soluzione a entrambi i problemi è **Nmap**, lo scanner di rete open-source p
 
 Nmap accetta diversi modi per indicare cosa scansionare:
 - **Range di IP** con `-`: `192.168.0.1-10` (da .1 a .10)
-- **Sottorete** con `/`: `192.168.0.1/24` (equivalente a `192.168.0.0-255`)
+- **Sottorete** con `/`: `192.168.0.0/24` (equivalente a `192.168.0.0-255`)
 - **Hostname**: es. `example.thm`
+
+### List scan (`-sL`)
+
+Elenca soltanto i target che verrebbero scansionati, **senza** scansionarli davvero — utile per confermare i target prima di lanciare la scansione vera.
+
+```bash
+nmap -sL 192.168.0.1/24
+# elenca i 256 indirizzi coinvolti
+```
 
 ### Ping scan (`-sn`)
 
@@ -40,18 +49,6 @@ nmap -sn 192.168.66.0/24
 
 Nmap usa metodi più sofisticati del semplice `ping` per determinare se un host è attivo — non va confuso con le limitazioni di ICMP puro.
 
-### List scan (`-sL`)
-
-Elenca soltanto i target che verrebbero scansionati, **senza** scansionarli davvero — utile per confermare i target prima di lanciare la scansione vera.
-
-```bash
-nmap -sL 192.168.0.1/24
-# elenca i 256 indirizzi coinvolti
-```
-
-### Discovery più fine (`-PS`, `-PA`, `-PU`)
-
-Nmap offre anche `-PS[portlist]`, `-PA[portlist]`, `-PU[portlist]` per la discovery via TCP SYN, TCP ACK e UDP su porte specifiche — un controllo più fine rispetto al semplice `-sn`.
 
 ### Forzare la scansione su host "apparentemente down" (`-Pn`)
 
@@ -75,10 +72,7 @@ Se un target non risponde durante la fase di discovery (es. firewall che blocca 
    nmap -sS -Pn -p 22,80,443 10.10.10.15
    ```
 
-3. **Target dietro un WAF/CDN** — l'IP di origine reale di un sito protetto da Cloudflare spesso blocca ICMP da IP sconosciuti, ma le porte del servizio web restano aperte per confermare che è davvero il server origine:
-   ```bash
-   nmap -sS -Pn -p 80,443 <IP_origine_sospetto>
-   ```
+> la differenza fra un firewall che blocca ICMP e uno che fa silent drop è la seguente. Un firewall che rifiuta risponde comunque (es. RST su TCP, o ICMP unreachable), quindi nmap capisce che l'host è vivo; un firewall con silent drop non da nessuna risposta, quindi nmap, senza -Pn, dà per morto l'host (perché il suo host discovery iniziale, tipicamente un ping ICMP, non riceve risposta) e salta la scansione delle porte, anche se in realtà il servizio dietro è raggiungibile
 
 4. **Scansione interna post-exploitation** — in reti segmentate con policy ICMP rigide tra segmenti, ma con porte applicative specifiche autorizzate (es. un database raggiungibile da un application server):
    ```bash
@@ -151,6 +145,9 @@ Running: Linux 4.X|5.X
 OS details: Linux 4.15 - 5.8
 ```
 
+> La detection `-O` di nmap ha bisogno di fare lo scan delle porte (con `-sS` o `-ST`); funziona analizzando come lo stack TCP/IP del target risponde a pacchetti particolari — timing, dimensioni delle finestre TCP, flag settati in modi specifici, ordine dei campi opzionali, comportamento su porte aperte vs chiuse, ecc. Ogni sistema operativo (Linux, Windows, BSD...) ha piccole "impronte" caratteristiche in queste risposte (il cosiddetto TCP/IP fingerprinting).
+
+
 ### Service and Version Detection (`-sV`)
 
 Identifica quale software e quale versione girano su una porta aperta — non solo "porta 22 aperta", ma "OpenSSH 8.9p1 su Ubuntu".
@@ -191,18 +188,6 @@ Uno scan a velocità normale può allertare un IDS o altre soluzioni di sicurezz
 | aggressive | `-T4` | Veloce |
 | insane | `-T5` | La più veloce, meno affidabile |
 
-**Impatto pratico sulla durata** (scansione delle 100 porte più comuni, `-sS -F`):
-
-| Timing | Durata totale |
-|---|---|
-| T0 (paranoid) | 9,8 ore |
-| T1 (sneaky) | 27,53 minuti |
-| T2 (polite) | 40,56 secondi |
-| T3 (normal) | 0,15 secondi |
-| T4 (aggressive) | 0,13 secondi |
-
-Analizzando il traffico con Wireshark: con **T0** Nmap attende 5 minuti tra un probe e il successivo; con **T1**, 15 secondi; con **T2**, 0,4 secondi; con **T3**, Nmap va alla velocità massima ritenuta sicura per quella connessione specifica.
-
 ### Un template non è un solo numero
 
 `-T3` non fissa rigidamente la velocità di invio — è un **pacchetto predefinito** di più parametri interni: timeout di attesa risposta, numero massimo di retry, ritardo tra probe, range di parallelismo di default. La velocità effettiva resta gestita da un **algoritmo di controllo della congestione** che si adatta dinamicamente in base a quanto la rete risponde bene.
@@ -225,22 +210,6 @@ Controllano quante probe TCP/UDP simultanee Nmap mantiene attive per un gruppo d
 
 Controllano direttamente la velocità di invio, in pacchetti al secondo. Il rate specificato si applica all'**intera scansione**, non a un singolo host.
 
-### Perché combinare `-T3` con `--min-rate`/`--max-rate`
-
-`--min-rate`/`--max-rate` **non fanno parte** del pacchetto T3 — sono un controllo esplicito che **ha la precedenza** sull'algoritmo adattivo di Nmap.
-
-```bash
-nmap -sS -T3 --min-rate 500 192.168.1.0/24
-```
-
-Qui `-T3` imposta il profilo bilanciato per timeout/retry/parallelismo, mentre `--min-rate 500` forza Nmap a **non scendere mai** sotto quella velocità, anche se l'algoritmo adattivo vorrebbe rallentare per qualche pacchetto perso — utile quando si sa che occasionali perdite di pacchetti sono normali e non si vuole che Nmap diventi eccessivamente conservativo.
-
-```bash
-nmap -sS -T4 --max-rate 100 192.168.1.0/24
-```
-
-Al contrario, si può prendere la reattività generale di `-T4` ma **limitare** comunque la velocità massima, se si vuole evitare di generare traffico troppo rumoroso o rischiare di sovraccaricare un dispositivo fragile lungo il percorso.
-
 ### Timeout per host
 
 ```
@@ -249,7 +218,7 @@ Al contrario, si può prendere la reattività generale di `-T4` ma **limitare** 
 
 Specifica il tempo massimo di attesa per un singolo host — utile per host lenti o con connessioni di rete scadenti, per evitare che lo scan resti bloccato indefinitamente su un target problematico.
 
-### Riepilogo
+### Riepilogo per le opzioni di timing
 
 | Opzione | Significato |
 |---|---|

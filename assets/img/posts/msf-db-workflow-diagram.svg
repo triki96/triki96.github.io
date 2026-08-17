@@ -1,0 +1,31 @@
+<svg width="680" height="270" viewBox="0 0 680 270" xmlns="http://www.w3.org/2000/svg" font-family="Helvetica, Arial, sans-serif">
+  <rect width="680" height="270" fill="#ffffff"/>
+  <text x="340" y="24" text-anchor="middle" font-size="14" font-weight="600" fill="#222">Il workflow del database di Metasploit</text>
+  
+  <rect x="30" y="50" width="120" height="44" rx="6" fill="#f2f2f2" stroke="#999" stroke-width="1"/>
+  <text x="90" y="76" text-anchor="middle" font-size="9.5" fill="#333">db_nmap</text>
+
+  <rect x="180" y="50" width="120" height="44" rx="6" fill="#e7f0fd" stroke="#4a86e8" stroke-width="1"/>
+  <text x="240" y="76" text-anchor="middle" font-size="9.5" fill="#1a3d7c">hosts / services</text>
+
+  <rect x="330" y="50" width="150" height="44" rx="6" fill="#e6f5f0" stroke="#2fa87d" stroke-width="1"/>
+  <text x="405" y="76" text-anchor="middle" font-size="9.5" fill="#1c5c42">search auxiliary</text>
+
+  <rect x="510" y="50" width="140" height="44" rx="6" fill="#fff3d6" stroke="#d9a441" stroke-width="1"/>
+  <text x="580" y="76" text-anchor="middle" font-size="9.5" fill="#7a5a12">use + hosts -R</text>
+
+  <text x="165" y="68" text-anchor="middle" font-size="12" fill="#555">→</text>
+  <text x="315" y="68" text-anchor="middle" font-size="12" fill="#555">→</text>
+  <text x="495" y="68" text-anchor="middle" font-size="12" fill="#555">→</text>
+
+  <rect x="200" y="140" width="280" height="44" rx="6" fill="#fdece7" stroke="#e06c4f" stroke-width="1"/>
+  <text x="340" y="166" text-anchor="middle" font-size="9.5" fill="#8a3a26">show options → run</text>
+
+  <line x1="580" y1="94" x2="580" y2="120" stroke="#999" stroke-width="1"/>
+  <line x1="580" y1="120" x2="340" y2="120" stroke="#999" stroke-width="1"/>
+  <line x1="340" y1="120" x2="340" y2="140" stroke="#999" stroke-width="1" marker-end="url(#a)"/>
+
+  <text x="340" y="220" text-anchor="middle" font-size="9.5" fill="#666">Il risultato di db_nmap resta salvato nel database:</text>
+  <text x="340" y="238" text-anchor="middle" font-size="9.5" fill="#666">"hosts -R" lo riusa automaticamente in ogni modulo successivo</text>
+
+</svg>
