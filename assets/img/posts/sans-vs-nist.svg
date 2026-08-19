@@ -1,0 +1,57 @@
+<svg viewBox="0 0 900 460" xmlns="http://www.w3.org/2000/svg" font-family="Helvetica, Arial, sans-serif">
+  <rect width="900" height="460" fill="#FAFAF8"/>
+  <text x="450" y="36" text-anchor="middle" font-size="20" font-weight="700" fill="#1B1D1F">SANS vs NIST — Iter della Risposta agli Incidenti</text>
+
+  <text x="185" y="70" text-anchor="middle" font-size="15" font-weight="700" fill="#3F7268">SANS (6 fasi)</text>
+  <text x="715" y="70" text-anchor="middle" font-size="15" font-weight="700" fill="#C99A3D">NIST (4 fasi)</text>
+
+  <!-- SANS boxes -->
+  <g font-size="13" fill="#1B1D1F">
+    <rect x="60" y="85" width="250" height="46" rx="5" fill="#ffffff" stroke="#3F7268" stroke-width="2"/>
+    <text x="185" y="113" text-anchor="middle">1. Preparation</text>
+
+    <rect x="60" y="145" width="250" height="46" rx="5" fill="#ffffff" stroke="#3F7268" stroke-width="2"/>
+    <text x="185" y="173" text-anchor="middle">2. Identification</text>
+
+    <rect x="60" y="205" width="250" height="46" rx="5" fill="#ffffff" stroke="#3F7268" stroke-width="2"/>
+    <text x="185" y="233" text-anchor="middle">3. Containment</text>
+
+    <rect x="60" y="265" width="250" height="46" rx="5" fill="#ffffff" stroke="#3F7268" stroke-width="2"/>
+    <text x="185" y="293" text-anchor="middle">4. Eradication</text>
+
+    <rect x="60" y="325" width="250" height="46" rx="5" fill="#ffffff" stroke="#3F7268" stroke-width="2"/>
+    <text x="185" y="353" text-anchor="middle">5. Recovery</text>
+
+    <rect x="60" y="385" width="250" height="46" rx="5" fill="#ffffff" stroke="#3F7268" stroke-width="2"/>
+    <text x="185" y="413" text-anchor="middle">6. Lessons Learned</text>
+  </g>
+
+  <!-- NIST boxes -->
+  <g font-size="13" fill="#1B1D1F">
+    <rect x="590" y="85" width="250" height="46" rx="5" fill="#ffffff" stroke="#C99A3D" stroke-width="2"/>
+    <text x="715" y="113" text-anchor="middle">1. Preparation</text>
+
+    <rect x="590" y="145" width="250" height="46" rx="5" fill="#ffffff" stroke="#C99A3D" stroke-width="2"/>
+    <text x="715" y="173" text-anchor="middle">2. Detection &amp; Analysis</text>
+
+    <rect x="590" y="235" width="250" height="106" rx="5" fill="#ffffff" stroke="#C99A3D" stroke-width="2"/>
+    <text x="715" y="263" text-anchor="middle">3. Containment,</text>
+    <text x="715" y="283" text-anchor="middle">Eradication</text>
+    <text x="715" y="303" text-anchor="middle">&amp; Recovery</text>
+
+    <rect x="590" y="385" width="250" height="46" rx="5" fill="#ffffff" stroke="#C99A3D" stroke-width="2"/>
+    <text x="715" y="413" text-anchor="middle">4. Post-Incident Activity</text>
+  </g>
+
+  <!-- Mapping lines -->
+  <g stroke="#9B9C99" stroke-width="1.5" stroke-dasharray="4,3">
+    <line x1="310" y1="108" x2="590" y2="108"/>
+    <line x1="310" y1="168" x2="590" y2="168"/>
+    <line x1="310" y1="228" x2="590" y2="288"/>
+    <line x1="310" y1="288" x2="590" y2="288"/>
+    <line x1="310" y1="348" x2="590" y2="288"/>
+    <line x1="310" y1="408" x2="590" y2="408"/>
+  </g>
+
+  <text x="450" y="450" text-anchor="middle" font-size="12" fill="#5B5A52">NIST accorpa Containment, Eradication e Recovery in un'unica fase; SANS le tiene distinte</text>
+</svg>

@@ -1,0 +1,1 @@
+../SEC1/10-defensive-security/soc-fundamentals.md

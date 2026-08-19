@@ -5,7 +5,7 @@ categories: [Cyber Security 101]
 tags: [offensive-security-tooling, sqlmap, SQLInjection]
 description: "SQL injection with SQLMap"
 toc: true
-
+---
 
 **SQLMap** è uno strumento automatizzato per rilevare e sfruttare vulnerabilità di SQL injection nelle applicazioni web, semplificando il processo di identificazione.
 
