@@ -1,0 +1,162 @@
+---
+title: "CAPA"
+date: 2026-08-19 12:00:00 +0200
+categories: [Cyber Security 101]
+tags: [security-solutions, capa]
+#description: "..."
+toc: true
+---
+
+**CAPA** è uno strumento di **analisi statica del malware** e serve a identificare automaticamente cosa fa (o cosa potrebbe fare) un file eseguibile, senza doverlo eseguire. Analizza file come PE, ELF, moduli .NET, shellcode e persino report di sandbox.
+
+Invece di analizzare manualmente un binario riga per riga in un disassemblatore (lavoro lento e che richiede molta esperienza), CAPA scansiona il file e applica un insieme di **regole** che descrivono comportamenti comuni, determinando cosa il programma è capace di fare — comunicazione di rete, manipolazione di file, iniezione di processo, e molto altro. Lo strumento racchiude anni di conoscenza di reverse engineering in un tool automatizzato, rendendolo accessibile anche a chi non è esperto in reverse engineering.
+
+CAPA è **analisi statica**: non esegue mai il file, analizza solo codice e struttura "da fermo". Questo lo rende sicuro da usare (nessun rischio di infezione durante l'analisi) ma comporta un limite importante — può segnalare capacità **potenziali** basate sul codice presente nel binario, senza garantire che vengano effettivamente eseguite in quel modo a runtime (es. codice morto, o percorsi condizionali mai raggiunti durante una reale esecuzione). Per confermare il comportamento effettivo serve comunque affiancare un'analisi dinamica, ad esempio in un ambiente controllato come FLARE-VM.
+
+
+CAPA è il primo passo naturale quando ci si trova davanti a un binario sconosciuto: prima ancora di aprire un disassemblatore, un giro rapido con `capa -v` (o `-vv` per il massimo dettaglio) dà già un'idea concreta di cosa il file potrebbe fare, con riferimenti diretti a MITRE ATT&CK, MBC e MAEC. Questo permette di dare priorità all'analisi manuale successiva — sapere in anticipo che un file mostra namespace come `anti-analysis` o `persistence` indica subito dove concentrare l'attenzione in IDA/Ghidra, invece di partire alla cieca.
+
+
+## Come si usa
+
+```bash
+capa cryptbot.bin
+```
+
+Il comando accetta il percorso al binario da analizzare; l'elaborazione può richiedere diversi minuti a seconda della dimensione e complessità del file.
+
+**Le opzioni da riga di comando più usate:**
+
+| Flag (forma breve) | Significato |
+|---|---|
+| `-h` | Mostra l'help con tutti i parametri disponibili |
+| `-v` | Informazioni dettagliate (verbose) sulle capability del malware |
+| `-vv` | Informazioni molto dettagliate (very verbose) — più lento da processare |
+
+## Esempio di output
+
+L'output di CAPA include prima una serie di **informazioni generali** sul file (hash MD5, SHA1, SHA256), seguite da informazioni più specifiche (tabella ATT&CK, tabella MAEC, tabella, MBC, tabella capability). La logica dietro le quattro tabelle è la seguente.
+
+1. Tabella ATT&CK — "qual è la strategia complessiva?"
+
+ATT&CK è il framework più ampio e conosciuto nel settore — pensato per parlare un linguaggio comune tra analisti, SOC, threat intelligence. Rispondere con "questo malware fa Defense Evasion e Persistence" è immediatamente comprensibile a chiunque lavori in sicurezza, anche senza conoscere i dettagli tecnici di CAPA. È il livello "executive summary".
+
+2. Tabella MAEC — "che tipo di malware è, in generale?"
+
+MAEC classifica l'archetipo del file (launcher, downloader, ecc.) — una categorizzazione più di alto livello ancora, orientata a capire "che ruolo gioca questo file nella catena d'attacco", indipendentemente dai dettagli tecnici specifici.
+
+3. Tabella MBC — "quali comportamenti tecnici specifici, con vocabolario dedicato al malware?"
+
+MBC esiste perché ATT&CK, pur ottimo, è pensato per descrivere l'attacco nel suo complesso (comprese fasi umane, non solo codice) — non ha granularità sufficiente per catalogare comportamenti molto specifici e tecnici tipici dell'analisi di un singolo binario (es. "Stack Strings", "Argument Obfuscation"). MBC è un vocabolario più fine e specializzato, pensato apposta per chi fa reverse engineering, con Identifier univoci pensati per il confronto/similarity analysis tra campioni di malware diversi.
+
+4. Tabella Capability/Namespace — "cosa ha effettivamente trovato CAPA nel codice, riga per riga?"
+
+Questa è la tabella più granulare e concreta: ogni riga corrisponde letteralmente a una regola YAML specifica che ha dato match nel binario (ricordi l'esempio di regola YAML che ti avevo mostrato prima, con create reverse shell?). È il livello "prova tecnica" — da qui puoi risalire esattamente a quale pattern di codice ha fatto scattare quella capability.
+
+
+Vediamo meglio con un esempio.
+
+```
+PS C:\Users\Administrator\Desktop\capa> capa .\cryptbot.bin
+```
+
+**1. Tabella metadati del file**
+
+```
+┌─────────────┬────────────────────────────────────────────────────────────────────┐
+│ md5         │ 3b9d26d2e7433749f2c32edb13a2b0a2                                   │
+│ sha1        │ 969437df8f4ad08542ce8fc9831fc49a7765b7c5                           │
+│ sha256      │ ae7bc6b6f6ecb206a7b957e4bb86e0d11845c5b2d9f7a00a482bef63b567ce4c    │
+│ analysis    │ static                                                             │
+│ os          │ windows                                                            │
+│ format      │ pe                                                                 │
+│ arch        │ i386                                                               │
+└─────────────┴────────────────────────────────────────────────────────────────────┘
+```
+
+**2. Tabella ATT&CK — Tactic e Technique**
+
+CAPA fa riferimento al framework MITRE ATT&CK per mostrare **tattiche e tecniche** del malware.
+
+```
+┌──────────────────┬───────────────────────────────────────────────────────────┐
+│ ATT&CK Tactic     │ ATT&CK Technique                                          │
+├──────────────────┼───────────────────────────────────────────────────────────┤
+│ DEFENSE EVASION   │ Obfuscated Files or Information [T1027]                   │
+│                   │ Virtualization/Sandbox Evasion::System Checks [T1497.001]│
+│ DISCOVERY         │ File and Directory Discovery [T1083]                     │
+│ EXECUTION         │ Command and Scripting Interpreter::PowerShell [T1059.001]│
+│ IMPACT            │ Resource Hijacking [T1496]                               │
+│ PERSISTENCE       │ Scheduled Task/Job::Scheduled Task [T1053.005]           │
+└──────────────────┴───────────────────────────────────────────────────────────┘
+```
+
+
+**3. Tabella MAEC**
+
+Descrive attributi del malware come comportamenti da **"launcher"** (innesca azioni specifiche simili al comportamento di un malware) o da **"downloader"** (scarica ed esegue altri file, tipico di malware più complessi). Se CAPA etichetta un file con il valore MAEC `downloader`, significa che il file mostra un comportamento simile a — ma non limitato a — quello di recuperare payload o risorse aggiuntive da Internet.
+
+```
+┌───────────────────┬───────────┐
+│ MAEC Category      │ MAEC Value│
+├───────────────────┼───────────┤
+│ malware-category   │ launcher  │
+└───────────────────┴───────────┘
+```
+
+**4. Tabella MBC — Objective e Behavior**
+
+MBC (Malware Behavior Catalogue) è un **catalogo di obiettivi e comportamenti del malware**, pensato per supportare diversi aspetti dell'analisi (etichettatura, analisi di similarità, reportistica standardizzata). Ogni comportamento nell'MBC ha un **Identifier** univoco — ad esempio:
+
+- Il micro-comportamento **"Create Process"** ha identificatore **C0017**
+- Il comportamento con identificatore **B0009** è **"Virtual Machine Detection"**
+- Codificare dati con Base64 e XOR (tecniche comuni di offuscamento) corrisponde al micro-comportamento **"Encode Data"**
+- Un malware capace di iniziare comunicazioni HTTP viene etichettato con il micro-comportamento **"HTTP Communication"**
+
+Nell'output CAPA questi compaiono nella tabella **MBC Objective / MBC Behavior** (vedi l'esempio completo più sotto).
+
+```
+┌──────────────────────────┬────────────────────────────────────────────┐
+│ MBC Objective             │ MBC Behavior                               │
+├──────────────────────────┼────────────────────────────────────────────┤
+│ ANTI-BEHAVIORAL ANALYSIS  │ Lab Machine Detection [B0009]              │
+│ COMMUNICATION             │ HTTP Communication [C0002]                 │
+│ DATA                      │ Encode Data::Base64 [C0026.001]            │
+│                           │ Encode Data::XOR [C0026.002]               │
+│ PROCESS                   │ Create Process [C0017]                     │
+└──────────────────────────┴────────────────────────────────────────────┘
+```
+
+**5. Tabella finale — Capability e Namespace**
+
+```
+┌─────────────────────────────────────────────┬────────────────────────────────────┐
+│ Capability                                   │ Namespace                          │
+├─────────────────────────────────────────────┼────────────────────────────────────┤
+│ reference anti-VM strings targeting VMWare    │ anti-analysis/anti-vm/vm-detection │
+│ contain obfuscated stackstrings (2 matches)   │ anti-analysis/obfuscation/string   │
+│ reference HTTP User-Agent string              │ communication/http                 │
+│ reference Base64 string                       │ data-manipulation/encoding/base64  │
+│ encode data using XOR                         │ data-manipulation/encoding/xor     │
+│ create process on Windows                     │ host-interaction/process/create    │
+│ run PowerShell expression                     │ load-code/powershell/              │
+│ schedule task via schtasks                    │ persistence/scheduled-tasks        │
+└─────────────────────────────────────────────┴────────────────────────────────────┘
+```
+
+Da questo output completo si legge subito una storia coerente: il file `cryptbot.bin` rileva macchine virtuali/sandbox (`anti-analysis`), offusca stringhe (`obfuscation`), comunica via HTTP (`communication`), codifica dati con Base64/XOR (`data-manipulation`), crea processi ed esegue PowerShell (`host-interaction`, `load-code`), e si garantisce persistenza tramite scheduled task (`persistence`) — un profilo tipico di malware da infostealer/loader, coerente con il nome del file stesso.
+
+
+I **namespace** raggruppano voci con lo stesso scopo, in un formato **gerarchico**: un **Top-Level Namespace (TLN)** e, sotto di esso, namespace più specifici. Ad esempio, `anti-analysis` è un TLN, mentre `anti-vm/vm-detection` è un namespace figlio al suo interno.
+
+**I principali Top-Level Namespace:**
+
+- **anti-analysis** — contiene un insieme di regole pensate per rilevare comportamenti che il malware usa per evadere l'analisi, incluse tecniche di **obfuscation, packing e anti-debugging** (ad esempio, il namespace figlio `anti-vm/vm-detection` si concentra sull'identificare stringhe o pattern comunemente usati dal malware per rilevare ambienti virtualizzati mentre è in esecuzione)
+- **collection** — contiene regole relative ai dati che il malware può enumerare e raccogliere per l'esfiltrazione
+- **communication** — riguarda i diversi comportamenti di comunicazione dimostrati dal malware
+- **compiler** — regole e configurazioni per riconoscere ambienti di build o compilatori specifici usati per generare l'eseguibile
+- **data-manipulation** — regole relative ai comportamenti coinvolti nell'alterare dati all'interno del file eseguibile
+- **host-interaction** — regole relative alle interazioni con il sistema host, come manipolazione del filesystem o dei processi
+- **persistence** — regole per comportamenti associati al mantenere accesso o persistenza all'interno di un sistema compromesso, permettendo al malware di restare presente e portare avanti attività malevole per un periodo prolungato
+
+**Esempio pratico**: se un file mostra i comportamenti "Base64 encoding" e "creazione di scheduled task", potrebbe star cercando di nascondere il proprio payload e mantenere persistenza sul sistema.
