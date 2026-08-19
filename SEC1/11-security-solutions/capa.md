@@ -95,7 +95,7 @@ MAEC classifica l'archetipo del file (launcher, downloader, ecc.) — una catego
 
 La tabella MBC risponde alla domanda: "quali comportamenti tecnici specifici, con vocabolario dedicato al malware?"
 
-MBC esiste perché ATT&CK, pur ottimo, è pensato per descrivere l'attacco nel suo complesso (comprese fasi umane, non solo codice) — non ha granularità sufficiente per catalogare comportamenti molto specifici e tecnici tipici dell'analisi di un singolo binario (es. "Stack Strings", "Argument Obfuscation"). MBC è un vocabolario più fine e specializzato, pensato apposta per chi fa reverse engineering, con Identifier univoci pensati per il confronto/similarity analysis tra campioni di malware diversi.
+MBC esiste perché ATT&CK, pur ottimo, è pensato per descrivere l'attacco nel suo complesso — non ha granularità sufficiente per catalogare comportamenti molto specifici e tecnici tipici dell'analisi di un singolo binario (es. "Stack Strings", "Argument Obfuscation"). MBC è un vocabolario più fine e specializzato, pensato apposta per chi fa reverse engineering, con Identifier univoci pensati per il confronto/similarity analysis tra campioni di malware diversi.
 
 MBC (Malware Behavior Catalogue) è un **catalogo di obiettivi e comportamenti del malware**, pensato per supportare diversi aspetti dell'analisi (etichettatura, analisi di similarità, reportistica standardizzata). Ogni comportamento nell'MBC ha un **Identifier** univoco — ad esempio:
 
