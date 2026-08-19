@@ -35,25 +35,7 @@ Il comando accetta il percorso al binario da analizzare; l'elaborazione può ric
 
 ## Esempio di output
 
-L'output di CAPA include prima una serie di **informazioni generali** sul file (hash MD5, SHA1, SHA256), seguite da informazioni più specifiche (tabella ATT&CK, tabella MAEC, tabella, MBC, tabella capability). La logica dietro le quattro tabelle è la seguente.
-
-1. Tabella ATT&CK — "qual è la strategia complessiva?"
-
-ATT&CK è il framework più ampio e conosciuto nel settore — pensato per parlare un linguaggio comune tra analisti, SOC, threat intelligence. Rispondere con "questo malware fa Defense Evasion e Persistence" è immediatamente comprensibile a chiunque lavori in sicurezza, anche senza conoscere i dettagli tecnici di CAPA. È il livello "executive summary".
-
-2. Tabella MAEC — "che tipo di malware è, in generale?"
-
-MAEC classifica l'archetipo del file (launcher, downloader, ecc.) — una categorizzazione più di alto livello ancora, orientata a capire "che ruolo gioca questo file nella catena d'attacco", indipendentemente dai dettagli tecnici specifici.
-
-3. Tabella MBC — "quali comportamenti tecnici specifici, con vocabolario dedicato al malware?"
-
-MBC esiste perché ATT&CK, pur ottimo, è pensato per descrivere l'attacco nel suo complesso (comprese fasi umane, non solo codice) — non ha granularità sufficiente per catalogare comportamenti molto specifici e tecnici tipici dell'analisi di un singolo binario (es. "Stack Strings", "Argument Obfuscation"). MBC è un vocabolario più fine e specializzato, pensato apposta per chi fa reverse engineering, con Identifier univoci pensati per il confronto/similarity analysis tra campioni di malware diversi.
-
-4. Tabella Capability/Namespace — "cosa ha effettivamente trovato CAPA nel codice, riga per riga?"
-
-Questa è la tabella più granulare e concreta: ogni riga corrisponde letteralmente a una regola YAML specifica che ha dato match nel binario (ricordi l'esempio di regola YAML che ti avevo mostrato prima, con create reverse shell?). È il livello "prova tecnica" — da qui puoi risalire esattamente a quale pattern di codice ha fatto scattare quella capability.
-
-
+L'output di CAPA include prima una serie di **informazioni generali** sul file (hash MD5, SHA1, SHA256), seguite da informazioni più specifiche.
 Vediamo meglio con un esempio.
 
 ```
@@ -76,7 +58,10 @@ PS C:\Users\Administrator\Desktop\capa> capa .\cryptbot.bin
 
 **2. Tabella ATT&CK — Tactic e Technique**
 
-CAPA fa riferimento al framework MITRE ATT&CK per mostrare **tattiche e tecniche** del malware.
+La tabella ATT&CK risponde alla domanda: "qual è la strategia complessiva?"
+
+CAPA fa riferimento al framework MITRE ATT&CK per mostrare **tattiche e tecniche** del malware. ATT&CK è il framework più ampio e conosciuto nel settore — pensato per parlare un linguaggio comune tra analisti, SOC, threat intelligence. Rispondere con "questo malware fa Defense Evasion e Persistence" è immediatamente comprensibile a chiunque lavori in sicurezza, anche senza conoscere i dettagli tecnici di CAPA. È il livello "executive summary".
+
 
 ```
 ┌──────────────────┬───────────────────────────────────────────────────────────┐
@@ -94,7 +79,9 @@ CAPA fa riferimento al framework MITRE ATT&CK per mostrare **tattiche e tecniche
 
 **3. Tabella MAEC**
 
-Descrive attributi del malware come comportamenti da **"launcher"** (innesca azioni specifiche simili al comportamento di un malware) o da **"downloader"** (scarica ed esegue altri file, tipico di malware più complessi). Se CAPA etichetta un file con il valore MAEC `downloader`, significa che il file mostra un comportamento simile a — ma non limitato a — quello di recuperare payload o risorse aggiuntive da Internet.
+La tabella MAEC risponde alla domanda: "che tipo di malware è, in generale?"
+
+MAEC classifica l'archetipo del file (launcher, downloader, ecc.) — una categorizzazione più di alto livello ancora, orientata a capire "che ruolo gioca questo file nella catena d'attacco", indipendentemente dai dettagli tecnici specifici. Descrive attributi del malware come comportamenti da **"launcher"** (innesca azioni specifiche simili al comportamento di un malware) o da **"downloader"** (scarica ed esegue altri file, tipico di malware più complessi). Se CAPA etichetta un file con il valore MAEC `downloader`, significa che il file mostra un comportamento simile a — ma non limitato a — quello di recuperare payload o risorse aggiuntive da Internet.
 
 ```
 ┌───────────────────┬───────────┐
@@ -105,6 +92,10 @@ Descrive attributi del malware come comportamenti da **"launcher"** (innesca azi
 ```
 
 **4. Tabella MBC — Objective e Behavior**
+
+La tabella MBC risponde alla domanda: "quali comportamenti tecnici specifici, con vocabolario dedicato al malware?"
+
+MBC esiste perché ATT&CK, pur ottimo, è pensato per descrivere l'attacco nel suo complesso (comprese fasi umane, non solo codice) — non ha granularità sufficiente per catalogare comportamenti molto specifici e tecnici tipici dell'analisi di un singolo binario (es. "Stack Strings", "Argument Obfuscation"). MBC è un vocabolario più fine e specializzato, pensato apposta per chi fa reverse engineering, con Identifier univoci pensati per il confronto/similarity analysis tra campioni di malware diversi.
 
 MBC (Malware Behavior Catalogue) è un **catalogo di obiettivi e comportamenti del malware**, pensato per supportare diversi aspetti dell'analisi (etichettatura, analisi di similarità, reportistica standardizzata). Ogni comportamento nell'MBC ha un **Identifier** univoco — ad esempio:
 
@@ -128,6 +119,10 @@ Nell'output CAPA questi compaiono nella tabella **MBC Objective / MBC Behavior**
 ```
 
 **5. Tabella finale — Capability e Namespace**
+
+La tabella Capability/Namespace risponde alla domanda: "cosa ha effettivamente trovato CAPA nel codice, riga per riga?"
+
+Questa è la tabella più granulare e concreta: ogni riga corrisponde letteralmente a una regola YAML specifica che ha dato match nel binario (ricordi l'esempio di regola YAML che ti avevo mostrato prima, con create reverse shell?). È il livello "prova tecnica" — da qui puoi risalire esattamente a quale pattern di codice ha fatto scattare quella capability.
 
 ```
 ┌─────────────────────────────────────────────┬────────────────────────────────────┐
