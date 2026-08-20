@@ -2,7 +2,7 @@
 title: "CAPA"
 date: 2026-08-19 12:00:00 +0200
 categories: [Cyber Security 101]
-tags: [security-solutions, capa]
+tags: [defensive-security-tooling, capa]
 #description: "..."
 toc: true
 ---

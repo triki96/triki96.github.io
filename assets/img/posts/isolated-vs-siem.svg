@@ -1,0 +1,51 @@
+<svg viewBox="0 0 900 380" width="900" height="380" xmlns="http://www.w3.org/2000/svg" font-family="Helvetica, Arial, sans-serif">
+  <rect width="900" height="380" fill="#FAFAF8"/>
+  <text x="450" y="36" text-anchor="middle" font-size="20" font-weight="700" fill="#1B1D1F">Log isolati vs Visibilità centralizzata</text>
+
+  <!-- Left: isolated -->
+  <text x="220" y="70" text-anchor="middle" font-size="15" font-weight="700" fill="#B6553C">Senza SIEM — log isolati</text>
+
+  <rect x="70" y="90" width="120" height="60" rx="5" fill="#ffffff" stroke="#B6553C" stroke-width="2"/>
+  <text x="130" y="124" text-anchor="middle" font-size="12" fill="#1B1D1F">Server A</text>
+
+  <rect x="220" y="90" width="120" height="60" rx="5" fill="#ffffff" stroke="#B6553C" stroke-width="2"/>
+  <text x="280" y="124" text-anchor="middle" font-size="12" fill="#1B1D1F">Server B</text>
+
+  <rect x="145" y="180" width="120" height="60" rx="5" fill="#ffffff" stroke="#B6553C" stroke-width="2"/>
+  <text x="205" y="214" text-anchor="middle" font-size="12" fill="#1B1D1F">Sito web</text>
+
+  <text x="205" y="280" text-anchor="middle" font-size="12" fill="#5B5A52">Ogni log source viene</text>
+  <text x="205" y="297" text-anchor="middle" font-size="12" fill="#5B5A52">controllato separatamente</text>
+  <text x="205" y="317" text-anchor="middle" font-size="12" fill="#B6553C" font-weight="600">Nessuna correlazione possibile</text>
+
+  <!-- Divider -->
+  <line x1="450" y1="70" x2="450" y2="340" stroke="#D8D1BE" stroke-width="1.5" stroke-dasharray="5,4"/>
+
+  <!-- Right: SIEM -->
+  <text x="680" y="70" text-anchor="middle" font-size="15" font-weight="700" fill="#3F7268">Con SIEM — visibilità centralizzata</text>
+
+  <rect x="560" y="90" width="100" height="50" rx="5" fill="#ffffff" stroke="#3F7268" stroke-width="2"/>
+  <text x="610" y="119" text-anchor="middle" font-size="11" fill="#1B1D1F">Server A</text>
+
+  <rect x="680" y="90" width="100" height="50" rx="5" fill="#ffffff" stroke="#3F7268" stroke-width="2"/>
+  <text x="730" y="119" text-anchor="middle" font-size="11" fill="#1B1D1F">Server B</text>
+
+  <rect x="620" y="160" width="100" height="50" rx="5" fill="#ffffff" stroke="#3F7268" stroke-width="2"/>
+  <text x="670" y="189" text-anchor="middle" font-size="11" fill="#1B1D1F">Sito web</text>
+
+  <!-- Arrows to SIEM -->
+  <defs>
+    <marker id="arrow3" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#3F7268"/>
+    </marker>
+  </defs>
+  <line x1="620" y1="140" x2="670" y2="240" stroke="#3F7268" stroke-width="1.5" marker-end="url(#arrow3)"/>
+  <line x1="720" y1="140" x2="675" y2="240" stroke="#3F7268" stroke-width="1.5" marker-end="url(#arrow3)"/>
+  <line x1="670" y1="210" x2="675" y2="240" stroke="#3F7268" stroke-width="1.5" marker-end="url(#arrow3)"/>
+
+  <rect x="620" y="250" width="110" height="55" rx="6" fill="#3F7268" stroke="#3F7268" stroke-width="2"/>
+  <text x="675" y="273" text-anchor="middle" font-size="13" font-weight="700" fill="#ffffff">SIEM</text>
+  <text x="675" y="289" text-anchor="middle" font-size="10" fill="#DDE7E3">correla i dati</text>
+
+  <text x="675" y="330" text-anchor="middle" font-size="12" fill="#3F7268" font-weight="600">Attacchi complessi diventano visibili</text>
+</svg>

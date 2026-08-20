@@ -1,0 +1,67 @@
+<svg viewBox="0 0 900 420" width="900" height="420" xmlns="http://www.w3.org/2000/svg" font-family="Helvetica, Arial, sans-serif">
+  <rect width="900" height="420" fill="#FAFAF8"/>
+  <text x="450" y="36" text-anchor="middle" font-size="20" font-weight="700" fill="#1B1D1F">Dai log source all'alert</text>
+
+  <!-- Log sources -->
+  <text x="115" y="70" text-anchor="middle" font-size="13" font-weight="700" fill="#1B1D1F">Log source</text>
+
+  <rect x="30" y="85" width="170" height="42" rx="5" fill="#ffffff" stroke="#C99A3D" stroke-width="2"/>
+  <text x="115" y="110" text-anchor="middle" font-size="12" fill="#1B1D1F">Windows (Event Viewer)</text>
+
+  <rect x="30" y="137" width="170" height="42" rx="5" fill="#ffffff" stroke="#C99A3D" stroke-width="2"/>
+  <text x="115" y="162" text-anchor="middle" font-size="12" fill="#1B1D1F">Linux (/var/log/*)</text>
+
+  <rect x="30" y="189" width="170" height="42" rx="5" fill="#ffffff" stroke="#C99A3D" stroke-width="2"/>
+  <text x="115" y="214" text-anchor="middle" font-size="12" fill="#1B1D1F">Web server (Apache/Nginx)</text>
+
+  <!-- arrows to transport -->
+  <defs>
+    <marker id="arrow4" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#1B1D1F"/>
+    </marker>
+  </defs>
+  <line x1="200" y1="106" x2="255" y2="150" stroke="#1B1D1F" stroke-width="1.5" marker-end="url(#arrow4)"/>
+  <line x1="200" y1="158" x2="255" y2="158" stroke="#1B1D1F" stroke-width="1.5" marker-end="url(#arrow4)"/>
+  <line x1="200" y1="210" x2="255" y2="170" stroke="#1B1D1F" stroke-width="1.5" marker-end="url(#arrow4)"/>
+
+  <!-- Transport methods -->
+  <text x="335" y="70" text-anchor="middle" font-size="13" font-weight="700" fill="#1B1D1F">Trasporto</text>
+
+  <rect x="260" y="85" width="150" height="42" rx="5" fill="#F2EEE4" stroke="#5B5A52" stroke-width="1.5"/>
+  <text x="335" y="110" text-anchor="middle" font-size="12" fill="#1B1D1F">Agent / Forwarder</text>
+
+  <rect x="260" y="137" width="150" height="42" rx="5" fill="#F2EEE4" stroke="#5B5A52" stroke-width="1.5"/>
+  <text x="335" y="162" text-anchor="middle" font-size="12" fill="#1B1D1F">Syslog</text>
+
+  <rect x="260" y="189" width="150" height="42" rx="5" fill="#F2EEE4" stroke="#5B5A52" stroke-width="1.5"/>
+  <text x="335" y="214" text-anchor="middle" font-size="12" fill="#1B1D1F">Manual Upload</text>
+
+  <!-- arrows to SIEM -->
+  <line x1="410" y1="106" x2="470" y2="158" stroke="#1B1D1F" stroke-width="1.5" marker-end="url(#arrow4)"/>
+  <line x1="410" y1="158" x2="470" y2="158" stroke="#1B1D1F" stroke-width="1.5" marker-end="url(#arrow4)"/>
+  <line x1="410" y1="210" x2="470" y2="158" stroke="#1B1D1F" stroke-width="1.5" marker-end="url(#arrow4)"/>
+
+  <!-- SIEM box -->
+  <rect x="475" y="110" width="160" height="96" rx="6" fill="#3F7268" stroke="#3F7268" stroke-width="2"/>
+  <text x="555" y="140" text-anchor="middle" font-size="14" font-weight="700" fill="#ffffff">SIEM</text>
+  <text x="555" y="160" text-anchor="middle" font-size="10" fill="#DDE7E3">Centralizzazione</text>
+  <text x="555" y="175" text-anchor="middle" font-size="10" fill="#DDE7E3">Normalizzazione</text>
+  <text x="555" y="190" text-anchor="middle" font-size="10" fill="#DDE7E3">Correlazione</text>
+
+  <!-- arrow to alert -->
+  <line x1="635" y1="158" x2="695" y2="158" stroke="#1B1D1F" stroke-width="1.5" marker-end="url(#arrow4)"/>
+
+  <rect x="700" y="133" width="150" height="50" rx="6" fill="#B6553C" stroke="#B6553C" stroke-width="2"/>
+  <text x="775" y="163" text-anchor="middle" font-size="13" font-weight="700" fill="#ffffff">Alert</text>
+
+  <!-- arrow down to analyst -->
+  <line x1="775" y1="183" x2="775" y2="230" stroke="#1B1D1F" stroke-width="1.5" marker-end="url(#arrow4)"/>
+
+  <rect x="700" y="235" width="150" height="50" rx="6" fill="#ffffff" stroke="#1B1D1F" stroke-width="2"/>
+  <text x="775" y="265" text-anchor="middle" font-size="12" fill="#1B1D1F">Analista</text>
+
+  <!-- bottom labels -->
+  <text x="115" y="260" text-anchor="middle" font-size="11" fill="#5B5A52">host-centric / rete</text>
+
+  <text x="450" y="380" text-anchor="middle" font-size="12" fill="#5B5A52">Formati diversi in ingresso, un unico schema normalizzato in uscita</text>
+</svg>

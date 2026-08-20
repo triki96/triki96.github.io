@@ -2,7 +2,7 @@
 title: "CyberChef"
 date: 2026-08-19 12:00:00 +0200
 categories: [Cyber Security 101]
-tags: [security-solutions, cyberchef]
+tags: [defensive-security-tooling, cyberchef]
 description: "..."
 toc: true
 ---

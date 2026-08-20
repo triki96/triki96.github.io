@@ -2,7 +2,7 @@
 title: "REMnux"
 date: 2026-08-19 12:00:00 +0200
 categories: [Cyber Security 101]
-tags: [security-solutions, remnux]
+tags: [defensive-security-tooling, remnux]
 description: "Analisi malaware in sicurezza"
 toc: true
 ---

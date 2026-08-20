@@ -1,0 +1,59 @@
+<svg viewBox="0 0 900 420" width="900" height="420" xmlns="http://www.w3.org/2000/svg" font-family="Helvetica, Arial, sans-serif">
+  <rect width="900" height="420" fill="#FAFAF8"/>
+  <text x="450" y="36" text-anchor="middle" font-size="20" font-weight="700" fill="#1B1D1F">NIDS vs HIDS — dove vengono posizionati</text>
+
+  <!-- Internet cloud -->
+  <ellipse cx="450" cy="80" rx="90" ry="34" fill="#F2EEE4" stroke="#5B5A52" stroke-width="1.5"/>
+  <text x="450" y="86" text-anchor="middle" font-size="13" fill="#1B1D1F">Internet</text>
+
+  <defs>
+    <marker id="arrow5" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#1B1D1F"/>
+    </marker>
+  </defs>
+  <line x1="450" y1="114" x2="450" y2="150" stroke="#1B1D1F" stroke-width="1.5" marker-end="url(#arrow5)"/>
+
+  <!-- Firewall -->
+  <rect x="390" y="150" width="120" height="40" rx="5" fill="#ffffff" stroke="#1B1D1F" stroke-width="2"/>
+  <text x="450" y="175" text-anchor="middle" font-size="12" fill="#1B1D1F">Firewall</text>
+
+  <line x1="450" y1="190" x2="450" y2="215" stroke="#1B1D1F" stroke-width="1.5" marker-end="url(#arrow5)"/>
+
+  <!-- NIDS at chokepoint -->
+  <rect x="360" y="215" width="180" height="46" rx="6" fill="#3F7268" stroke="#3F7268" stroke-width="2"/>
+  <text x="450" y="238" text-anchor="middle" font-size="13" font-weight="700" fill="#ffffff">NIDS</text>
+  <text x="450" y="254" text-anchor="middle" font-size="10" fill="#DDE7E3">monitora tutto il traffico di subnet</text>
+
+  <line x1="450" y1="261" x2="450" y2="285" stroke="#1B1D1F" stroke-width="1.5" marker-end="url(#arrow5)"/>
+
+  <!-- Switch -->
+  <rect x="390" y="285" width="120" height="34" rx="5" fill="#ffffff" stroke="#1B1D1F" stroke-width="2"/>
+  <text x="450" y="307" text-anchor="middle" font-size="12" fill="#1B1D1F">Switch</text>
+
+  <!-- Hosts with HIDS -->
+  <line x1="450" y1="319" x2="220" y2="355" stroke="#1B1D1F" stroke-width="1.5"/>
+  <line x1="450" y1="319" x2="450" y2="355" stroke="#1B1D1F" stroke-width="1.5"/>
+  <line x1="450" y1="319" x2="680" y2="355" stroke="#1B1D1F" stroke-width="1.5"/>
+
+  <g>
+    <rect x="140" y="355" width="160" height="46" rx="6" fill="#ffffff" stroke="#C99A3D" stroke-width="2"/>
+    <text x="220" y="374" text-anchor="middle" font-size="12" fill="#1B1D1F">Host A</text>
+    <text x="220" y="390" text-anchor="middle" font-size="10" fill="#C99A3D" font-weight="700">HIDS installato</text>
+  </g>
+  <g>
+    <rect x="370" y="355" width="160" height="46" rx="6" fill="#ffffff" stroke="#C99A3D" stroke-width="2"/>
+    <text x="450" y="374" text-anchor="middle" font-size="12" fill="#1B1D1F">Host B</text>
+    <text x="450" y="390" text-anchor="middle" font-size="10" fill="#C99A3D" font-weight="700">HIDS installato</text>
+  </g>
+  <g>
+    <rect x="600" y="355" width="160" height="46" rx="6" fill="#ffffff" stroke="#C99A3D" stroke-width="2"/>
+    <text x="680" y="374" text-anchor="middle" font-size="12" fill="#1B1D1F">Host C</text>
+    <text x="680" y="390" text-anchor="middle" font-size="10" fill="#C99A3D" font-weight="700">HIDS installato</text>
+  </g>
+
+  <text x="820" y="238" text-anchor="middle" font-size="10" fill="#5B5A52" transform="rotate(0)">1 punto,</text>
+  <text x="820" y="252" text-anchor="middle" font-size="10" fill="#5B5A52">vista di rete</text>
+
+  <text x="80" y="380" text-anchor="middle" font-size="10" fill="#5B5A52">agente su</text>
+  <text x="80" y="393" text-anchor="middle" font-size="10" fill="#5B5A52">ogni host</text>
+</svg>
