@@ -1,0 +1,59 @@
+<svg viewBox="0 0 900 420" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+  <rect width="900" height="420" fill="#f3f3f3"/>
+  <rect x="10" y="10" width="880" height="400" rx="6" fill="#ffffff" stroke="#c0c0c0"/>
+  <rect x="10" y="10" width="880" height="32" rx="6" fill="#2b579a"/>
+  <text x="26" y="31" fill="#ffffff" font-size="14" font-weight="bold">Wireshark - cobaltstrike_capture.pcapng</text>
+
+  <!-- filter bar -->
+  <rect x="26" y="52" width="848" height="30" fill="#ffffff" stroke="#8ab4f8" stroke-width="1.5"/>
+  <text x="36" y="72" font-size="13" fill="#1a56c4" font-family="Consolas, monospace">ip.addr == 47.120.46.210</text>
+
+  <!-- column headers -->
+  <rect x="26" y="90" width="848" height="24" fill="#eaeaea"/>
+  <text x="34" y="106" font-size="11" fill="#444">No.</text>
+  <text x="80" y="106" font-size="11" fill="#444">Time</text>
+  <text x="180" y="106" font-size="11" fill="#444">Source</text>
+  <text x="330" y="106" font-size="11" fill="#444">Destination</text>
+  <text x="480" y="106" font-size="11" fill="#444">Protocol</text>
+  <text x="560" y="106" font-size="11" fill="#444">Info</text>
+
+  <g font-size="11" fill="#333" font-family="Consolas, monospace">
+    <text x="34" y="130">1042</text>
+    <text x="80" y="130">14.201</text>
+    <text x="180" y="130">10.10.10.5</text>
+    <text x="330" y="130">47.120.46.210</text>
+    <text x="480" y="130" fill="#0b6e2b">TLSv1.2</text>
+    <text x="560" y="130">Client Hello</text>
+
+    <text x="34" y="152">1044</text>
+    <text x="80" y="152">14.240</text>
+    <text x="180" y="152">47.120.46.210</text>
+    <text x="330" y="152">10.10.10.5</text>
+    <text x="480" y="152" fill="#0b6e2b">TLSv1.2</text>
+    <text x="560" y="152">Server Hello, Certificate</text>
+
+    <text x="34" y="174">1047</text>
+    <text x="80" y="174">14.310</text>
+    <text x="180" y="174">10.10.10.5</text>
+    <text x="330" y="174">47.120.46.210</text>
+    <text x="480" y="174" fill="#0b6e2b">TLSv1.2</text>
+    <text x="560" y="174">Application Data</text>
+
+    <text x="34" y="196">1051</text>
+    <text x="80" y="196">17.802</text>
+    <text x="180" y="196">47.120.46.210</text>
+    <text x="330" y="196">10.10.10.5</text>
+    <text x="480" y="196" fill="#0b6e2b">TLSv1.2</text>
+    <text x="560" y="196">Application Data</text>
+  </g>
+
+  <rect x="26" y="230" width="848" height="70" fill="#fafafa" stroke="#ddd"/>
+  <text x="38" y="250" font-size="12" font-weight="bold" fill="#444">Hex / bytes (estratto)</text>
+  <text x="38" y="270" font-size="11" fill="#555" font-family="Consolas, monospace">16 03 01 00 c8 01 00 00 c4 03 03 ... (handshake TLS cifrato)</text>
+  <text x="38" y="288" font-size="12" fill="#333">Traffico cifrato: contenuto non leggibile in chiaro, ma la destinazione è visibile.</text>
+
+  <rect x="26" y="316" width="848" height="72" fill="#fff3f3" stroke="#f0b0b0"/>
+  <text x="38" y="336" font-size="12" font-weight="bold" fill="#b00020">Osservazione</text>
+  <text x="38" y="356" font-size="12" fill="#333">Il traffico verso 47.120.46.210 è cifrato in TLS: tipico comportamento</text>
+  <text x="38" y="374" font-size="12" fill="#333">di un canale C2 che nasconde comandi e dati esfiltrati.</text>
+</svg>

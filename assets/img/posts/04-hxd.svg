@@ -1,0 +1,53 @@
+<svg viewBox="0 0 900 340" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+  <rect width="900" height="340" fill="#f3f3f3"/>
+  <rect x="10" y="10" width="880" height="320" rx="6" fill="#ffffff" stroke="#c0c0c0"/>
+  <rect x="10" y="10" width="880" height="32" rx="6" fill="#2b579a"/>
+  <text x="26" y="31" fill="#ffffff" font-size="14" font-weight="bold">HxD - cobaltstrike.exe</text>
+
+  <!-- hex header row -->
+  <g font-size="11" fill="#555" font-family="Consolas, monospace">
+    <text x="90" y="66">00</text><text x="115" y="66">01</text><text x="140" y="66">02</text>
+    <text x="165" y="66">03</text><text x="190" y="66">04</text><text x="215" y="66">05</text>
+    <text x="240" y="66">06</text><text x="265" y="66">07</text><text x="290" y="66">08</text>
+    <text x="315" y="66">09</text><text x="340" y="66">0A</text><text x="365" y="66">0B</text>
+    <text x="390" y="66">0C</text><text x="415" y="66">0D</text><text x="440" y="66">0E</text>
+    <text x="465" y="66">0F</text>
+  </g>
+  <line x1="26" y1="72" x2="874" y2="72" stroke="#ddd"/>
+
+  <!-- offset + hex row 1 (MZ header) -->
+  <rect x="26" y="80" width="848" height="26" fill="#fff3f3" stroke="#f0b0b0"/>
+  <text x="34" y="98" font-size="12" fill="#555" font-family="Consolas, monospace">00000000</text>
+  <g font-size="12" font-weight="bold" fill="#b00020" font-family="Consolas, monospace">
+    <text x="90" y="98">4D</text><text x="115" y="98">5A</text>
+  </g>
+  <g font-size="12" fill="#333" font-family="Consolas, monospace">
+    <text x="140" y="98">90</text><text x="165" y="98">00</text><text x="190" y="98">03</text>
+    <text x="215" y="98">00</text><text x="240" y="98">00</text><text x="265" y="98">00</text>
+    <text x="290" y="98">04</text><text x="315" y="98">00</text><text x="340" y="98">00</text>
+    <text x="365" y="98">00</text><text x="390" y="98">FF</text><text x="415" y="98">FF</text>
+    <text x="440" y="98">00</text><text x="465" y="98">00</text>
+  </g>
+  <text x="620" y="98" font-size="12" fill="#666" font-family="Consolas, monospace">MZ..............</text>
+
+  <!-- row 2 -->
+  <text x="34" y="126" font-size="12" fill="#555" font-family="Consolas, monospace">00000010</text>
+  <g font-size="12" fill="#333" font-family="Consolas, monospace">
+    <text x="90" y="126">B8</text><text x="115" y="126">00</text><text x="140" y="126">00</text>
+    <text x="165" y="126">00</text><text x="190" y="126">00</text><text x="215" y="126">00</text>
+    <text x="240" y="126">00</text><text x="265" y="126">00</text><text x="290" y="126">40</text>
+    <text x="315" y="126">00</text><text x="340" y="126">00</text><text x="365" y="126">00</text>
+    <text x="390" y="126">00</text><text x="415" y="126">00</text><text x="440" y="126">00</text>
+    <text x="465" y="126">00</text>
+  </g>
+
+  <rect x="26" y="160" width="848" height="90" fill="#fafafa" stroke="#ddd"/>
+  <text x="38" y="182" font-size="12" font-weight="bold" fill="#444">Cosa significano i byte 4D 5A</text>
+  <text x="38" y="202" font-size="12" fill="#333">Sono i "magic bytes" MZ, la firma standard che apre ogni eseguibile</text>
+  <text x="38" y="220" font-size="12" fill="#333">Windows valido (formato PE). Il file, quindi, è un vero eseguibile</text>
+  <text x="38" y="238" font-size="12" fill="#333">e non un file rinominato o corrotto.</text>
+
+  <rect x="26" y="262" width="848" height="56" fill="#eef6ff" stroke="#bcd9ff"/>
+  <text x="38" y="282" font-size="12" fill="#1a4d8f" font-weight="bold">Utilità pratica</text>
+  <text x="38" y="300" font-size="12" fill="#1a4d8f">Controllare l'header serve a scoprire file "travestiti"</text>
+</svg>

