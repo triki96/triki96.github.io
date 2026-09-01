@@ -1,1 +1,0 @@
-../SEC1/11-security-solutions/ids-fundamentals.md

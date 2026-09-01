@@ -1,1 +1,0 @@
-../SEC1/10-defensive-security/incident-response-fundamentals.md

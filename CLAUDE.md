@@ -4,14 +4,16 @@ Questo è il mio archivio di appunti per il percorso "Cyber Security 101" su Try
 
 ## Struttura delle cartelle
 
-- Una cartella per **modulo del corso**, numerata nell'ordine ufficiale del path, es:
+- Tutti i file vivono dentro `_posts/` (nessuna cartella separata, nessun symlink): una
+  sottocartella per **modulo del corso** dentro `_posts/`, numerata nell'ordine ufficiale del path, es:
   ```
-  01-networking/
-  02-linux/
-  03-web-security/
+  _posts/01-networking/
+  _posts/02-linux/
+  _posts/03-web-security/
   ...
   ```
-- Dentro ogni cartella modulo, un file markdown per **room completata**, es. `01-networking/dns-in-depth.md`.
+- Dentro ogni cartella modulo, un file markdown per **room completata**, col prefisso data
+  richiesto da Jekyll per essere riconosciuto come post: `_posts/01-networking/AAAA-MM-GG-dns-in-depth.md`.
 - Alla fine di ogni modulo, un file `_riepilogo.md` dentro la cartella del modulo, con solo i concetti chiave e link alle room dettagliate — è quello che rileggo prima dell'esame SEC1, non deve contenere spiegazioni lunghe.
 
 ## Template per ogni file di room (post Chirpy)
@@ -20,8 +22,8 @@ Questo è il mio archivio di appunti per il percorso "Cyber Security 101" su Try
 ---
 title: "Titolo"
 date: AAAA-MM-GG 12:00:00 +0200
-categories: [Cyber Security 101]
-tags: [nome-modulo-thm, argomento-specifico]
+categories: [Cyber Security 101, nome-modulo-thm]
+tags: [argomento-specifico]
 description: "..."
 toc: true
 ---
@@ -49,7 +51,8 @@ toc: true
 
 Note sul formato:
 - `description` nel front matter va sempre compilata (1 riga, riassume il contenuto del post)
-- `tags` in inglese minuscolo: nome esatto del modulo THM (slug) + argomento specifico
+- `categories` in inglese minuscolo: primo elemento fisso `Cyber Security 101`, secondo elemento il nome esatto del modulo THM (slug)
+- `tags` in inglese minuscolo: solo l'argomento/i specifico/i della room, senza ripetere il modulo (già in `categories`)
 - tabella dei codici HTTP (quando presente): ordine 200, 301/302, 403, 404
 - niente sezione "Collegamenti" se non ci sono link reali ad altri post già esistenti
 
@@ -79,8 +82,9 @@ Note sul formato:
 
 ## Su Chirpy (quando pubblico gli appunti come post)
 
-- `categories: [Cyber Security 101]` fisso per tutte le room del corso, per tenerle distinte da eventuali CTF libere future.
-- `tags:` con il nome del modulo e l'argomento specifico (es. `tags: [networking, dns]`).
+- `categories: [Cyber Security 101, nome-modulo-thm]` — primo elemento fisso per tutte le room del corso (per tenerle distinte da eventuali CTF libere future), secondo elemento lo slug del modulo THM (es. `categories: [Cyber Security 101, networking]`).
+- `tags:` solo con l'argomento specifico della room, senza ripetere il modulo (es. `tags: [dns]`).
+- Le room sono raggiungibili solo tramite le tab standard di Chirpy "Categories" e "Tags" — niente tab dedicato nella sidebar.
 
 ## Interrogazioni
 

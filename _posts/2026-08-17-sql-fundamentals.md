@@ -1,1 +1,0 @@
-../SEC1/08-web-hacking/sql-fundamentals.md

@@ -1,1 +1,0 @@
-../SEC1/07-exploitation-basics/metasploit.md

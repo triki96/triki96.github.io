@@ -1,1 +1,0 @@
-../SEC1/06-cryptography/john-the-ripper.md
