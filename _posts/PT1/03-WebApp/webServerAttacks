@@ -1,0 +1,7 @@
+
+WEB SERVER ATTACKS
+(Enumerate and identify misconfigurations across Apache, Nginx, Node.js, and Python HTTP Server.)
+
+we focus on the reconnaissance and misconfiguration-identification phase of web application testing
+
+Prima di iniziare a enumerare le directory o a testare gli input, è necessario sapere con cosa si ha a che fare. Il software del server web stesso determina quali errori di configurazione sono possibili, quali percorsi vale la pena controllare e quali strumenti saranno più efficaci. Identificare il server non è una formalità. Influisce direttamente su ogni decisione successiva.

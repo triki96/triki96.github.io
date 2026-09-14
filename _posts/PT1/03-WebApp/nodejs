@@ -1,0 +1,76 @@
+JavaScript è nato per girare dentro il browser — è il linguaggio che fa muovere i pulsanti e i menu di un sito web. Per anni, JavaScript poteva vivere solo lì dentro, non poteva funzionare da solo su un computer.
+
+Node.js ha risolto questo: è un programma che permette di far girare JavaScript fuori dal browser, direttamente sul tuo computer o su un server, proprio come faresti con Python. Con Node puoi scrivere un file .js, lanciarlo da terminale, e fargli fare cose come leggere file, parlare con internet, creare un server — cose che JavaScript da solo, dentro un browser, non potrebbe mai fare.
+
+Express: uno strumento sopra Node.js
+
+Node da solo ti dà già la possibilità di costruire un server, ma in modo scomodo — devi scrivere a mano ogni singolo dettaglio: leggere l'indirizzo richiesto, controllare che metodo è stato usato (GET, POST...), decidere cosa rispondere in ogni caso.
+
+js
+// Solo Node, senza Express — scomodo, tutto scritto a mano
+const http = require('http');
+http.createServer((req, res) => {
+  if (req.url === '/ciao' && req.method === 'GET') {
+    res.end('Ciao!');
+  } else {
+    res.statusCode = 404;
+    res.end('Non trovato');
+  }
+}).listen(3000);
+
+Express è semplicemente un pacchetto pronto che rende tutto questo più veloce da scrivere. Stessa identica cosa, con Express:
+
+js
+const express = require('express');
+const app = express();
+
+app.get('/ciao', (req, res) => {
+  res.send('Ciao!');
+});
+
+app.listen(3000);
+
+Meno righe, stesso risultato. Express non fa niente di magico che Node non potesse già fare — è solo un modo più comodo e organizzato di scrivere la stessa cosa.
+
+
+Come funziona, passo per passo
+
+Ogni volta che qualcuno (un browser, o curl) manda una richiesta a un server Express, succede questo:
+
+Arriva la richiesta — un indirizzo, un metodo (GET/POST), a volte dei dati
+Express guarda cosa è stato chiesto e cerca, tra tutte le "porte" che hai definito con app.get(), app.post(), ecc., quale corrisponde
+Prima di rispondere, la richiesta passa attraverso dei controlli intermedi (li vediamo tra un attimo — si chiamano middleware)
+Viene eseguita la funzione che hai scritto tu per quella richiesta specifica, con due "pacchetti" a disposizione: req (cosa è arrivato) e res (gli strumenti per rispondere)
+La risposta parte verso chi l'aveva chiesta
+
+Confronto con quello che già conosci
+	python -m http.server	Express
+A cosa serve	Far vedere velocemente dei file, senza scrivere codice	Costruire un sito o un'applicazione vera, con logica tua
+Devi scrivere codice?	No	Sì, ogni "scrivania" e ogni risposta la scrivi tu
+Ha i "controlli intermedi" (middleware)?	No	Sì, è il pezzo centrale
+Si usa per app vere, online?	Mai	Sì, tantissimo
+
+
+
+Node
+Il punto di partenza: dove vive normalmente JavaScript
+
+Prima di Node.js, JavaScript esisteva solo dentro il browser. Serviva a rendere interattive le pagine web: un pulsante che cambia colore al click, un menu che si apre, un form che si valida senza ricaricare la pagina. Il browser (Chrome, Firefox) aveva al suo interno un "motore" capace di leggere ed eseguire codice JavaScript, ma quel motore viveva chiuso dentro il browser — non poteva toccare file sul disco, non poteva aprire connessioni di rete a piacimento, non poteva far girare un server.
+
+Nel 2009 un programmatore, Ryan Dahl, ha preso il motore JavaScript di Chrome (si chiama V8, è lo stesso pezzo di software che fa girare JS dentro il browser Google) e lo ha staccato dal browser, incollandolo dentro un programma a sé stante che gira direttamente sul sistema operativo. Quel programma si chiama Node.js.
+
+Il risultato pratico: da quel momento puoi scrivere un file .js e lanciarlo da terminale, esattamente come faresti con un file .py:
+
+console
+$ node mio_script.js
+
+E dentro quel file, JavaScript può fare cose che prima gli erano vietate: leggere e scrivere file, aprire connessioni di rete, creare un server che ascolta su una porta — tutto quello che serve per costruire un backend, non solo pagine interattive.
+
+npm: dove si prendono i pacchetti
+
+Node porta con sé uno strumento chiamato npm (Node Package Manager), che serve a scaricare e installare codice scritto da altri — esattamente come pip fa per Python. Express, che abbiamo studiato nei messaggi precedenti, è uno di questi pacchetti:
+
+console
+$ npm install express
+
+Questo comando scarica Express (e tutto ciò da cui dipende) dentro una cartella node_modules nel tuo progetto, così puoi poi fare require('express') nel codice, come abbiamo visto.

