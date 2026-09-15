@@ -1,9 +1,9 @@
-
 ---
-title: "Web Server Attacks: IIS Fingerprinting, Enumeration e Exploitation"
+title: "IIS Web Server Attacks"
 date: 2026-09-14 12:00:00 +0100
-categories: [PT1, WebApp]
+categories: [PT1, 3-web-app]
 tags: [iis, webdav, aspx, fingerprinting, tilde-enumeration, misconfigurations]
+description:  IIS Fingerprinting, Enumeration e Exploitation
 ---
 
 ## Introduzione: IIS come bersaglio di pentesting

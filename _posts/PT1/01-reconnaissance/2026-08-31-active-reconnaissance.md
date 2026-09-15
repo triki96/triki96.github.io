@@ -1,7 +1,7 @@
 ---
 title: "Active Reconnaissance"
 date: 2026-08-31 8:00:00 +0200
-categories: [PT1, reconnaissance]
+categories: [PT1, 1-reconnaissance]
 tags: [recon]
 description: "Tecniche di reconnaissance attiva contro un target: browser e dev tools, ping e TTL per il fingerprinting OS, traceroute, banner grabbing con telnet e netcat."
 toc: true

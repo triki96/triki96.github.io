@@ -1,7 +1,7 @@
 ---
 title: "Passive Reconnaissance"
 date: 2026-08-31 8:00:00 +0200
-categories: [PT1, reconnaissance]
+categories: [PT1, 1-reconnaissance]
 tags: [recon]
 description: "Reconnaissance passiva senza contatto diretto col target: whois/RDAP, nslookup/dig per i record DNS, DNSDumpster e crt.sh per l'enumerazione di sottodomini, Shodan per i servizi già esposti."
 toc: true

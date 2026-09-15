@@ -1,7 +1,7 @@
 ---
 title: "Protocolli di Rete e Attacchi Comuni"
 date: 2026-09-02 8:00:00 +0200
-categories: [PT1, reconnaissance]
+categories: [PT1, 1-reconnaissance]
 tags: [telnet, http, ftp, smtp, pop3, imap, tls, ssh, sniffing, mitm, password-attack]
 description: "Protocolli di rete storici (Telnet, HTTP, FTP, SMTP, POP3, IMAP, SSH) e le loro versioni cifrate con TLS; attacchi comuni contro di essi (sniffing, MITM, password attack) e relative mitigazioni."
 toc: true
@@ -79,7 +79,7 @@ ftp> PASS anything@example.com
 {: .prompt-info }
 
 
-Server FTP comuni: **vsftpd**, **ProFTPD**, **Pure-FTPd** (Linux), IIS (Windows). 
+Server FTP comuni: **vsftpd**, **ProFTPD**, **Pure-FTPd** (Linux), IIS (Windows).
 Client ftp: il comando `ftp` da terminale, oppure **FileZilla** con GUI.
 
 
@@ -260,8 +260,8 @@ SSH (Secure Shell) è il sostituto sicuro di Telnet per l'amministrazione remota
 	Quando ci connettiamo, il server genera una **sfida casuale** e ce la manda, cifrata con la nostra chiave pubblica. Solo chi possiede la chiave privata corrispondente può decifrare quella sfida e rispondere correttamente. Il server verifica la risposta usando la chiave pubblica che ha in `authorized_keys`; se torna, siamo autenticati.
 
 	> L'autenticazione a chiave pubblica non è attaccabile con Hydra/bruteforce nello stesso modo: non stiamo indovinando una stringa breve, stiamo cercando di fattorizzare/indovinare una chiave crittografica (praticamente impossibile con la potenza di calcolo attuale). Inoltre, anche se qualcuno intercetta tutto il traffico di rete, non ottiene nulla di utile per autenticarsi di nuovo
-	
-- **Basata su certificati**:  Concettualmente è un'evoluzione dell'autenticazione a chiave pubblica. 
+
+- **Basata su certificati**:  Concettualmente è un'evoluzione dell'autenticazione a chiave pubblica.
 	Con la semplice chiave pubblica, se abbiamo 500 server e 50 dipendenti, dovremmo distribuire/gestire manualmente la chiave pubblica di ogni utente su ogni server (dentro authorized_keys), e se un dipendente lascia l'azienda dobbiamo rimuoverla ovunque, il che è **ingestibile su larga scala**.
 - **MFA** (multi-factor authentication)
 
@@ -364,7 +364,7 @@ Attacchi mirati a violare la **confidenzialità** ottenendo credenziali valide.
 
 **Hydra** è lo strumento principale per automatizzare questi attacchi contro servizi di rete (FTP, SSH, IMAP, POP3, SMTP, HTTP...):
 
-Esempio: 
+Esempio:
 
 ```bash
 hydra -l username -P wordlist.txt server service

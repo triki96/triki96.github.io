@@ -1,7 +1,7 @@
 ---
 title: "Nmap Host Discovery"
 date: 2026-09-03 00:00:00 +0200
-categories: [PT1, nmap]
+categories: [PT1, 2-nmap]
 tags: [nmap, host-discovery, enumeration]
 ---
 

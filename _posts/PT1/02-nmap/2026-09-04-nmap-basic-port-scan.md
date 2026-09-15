@@ -1,7 +1,7 @@
 ---
 title: Nmap Basic Port Scan
 date: 2026-09-04 00:00:00 +0200
-categories: [PT1, nmap]
+categories: [PT1, 2-nmap]
 tags: [nmap, tcp, udp, port-scan, recon]
 ---
 
