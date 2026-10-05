@@ -29,6 +29,19 @@ Script che automatizzano la fase di enumerazione e segnalano i possibili percors
 | **Linux Smart Enumeration (lse)** | Enumerazione con livelli di verbosità regolabili: parte silenziosa e rivela più dettagli man mano che il livello aumenta. |
 | **Linux Priv Checker** | Elenca le informazioni di sistema e controlla automaticamente le opportunità comuni di escalation, segnalando i problemi in linea. |
 
+## Enumerazione automatizzata: dei processi
+
+**pspy**
+
+Faccio girare il programma e osservo i processi avviati dall'account `root`. Verifico se riesco ad aprire i file coinvolti e, in caso affermativo, se posso anche modificarli.
+
+Se modificabili, posso:
+- cambiare la password di root: `echo "root:newpassword" | chpasswd`
+- fargli leggere dei file a mio piacimento
+- modificare i permessi di altri file
+- salvare una chiave SSH tra le `authorized_keys` dell'account root, per potermi collegare via SSH
+- ...
+
 ## Un limite importante da conoscere
 
 Gli strumenti automatici sono rumorosi e generano moltissimo output: tendono a segnalare falsi positivi e un EDR può rilevarne l'esecuzione. Vanno usati come punto di partenza, non come sostituti dell'enumerazione manuale: ogni segnalazione va comunque verificata a mano prima di lanciare un exploit, perché un exploit sbagliato può mandare in crash il target.
