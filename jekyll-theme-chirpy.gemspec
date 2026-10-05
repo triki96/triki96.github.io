@@ -10,9 +10,18 @@ Gem::Specification.new do |spec|
   spec.homepage      = "https://github.com/cotes2020/jekyll-theme-chirpy"
   spec.license       = "MIT"
 
-  spec.files         = `git ls-files -z`.split("\x0").select { |f|
-    f.match(%r!^((_(includes|layouts|sass|(data\/(locales|origin)))|assets)\/|README|LICENSE)!i)
-  }
+  theme_files = %r!^((_(includes|layouts|sass|(data\/(locales|origin)))|assets)\/|README|LICENSE)!i
+
+  tracked_files =
+    begin
+      `git ls-files -z`.split("\x0")
+    rescue Errno::ENOENT
+      # git is not available (e.g. installing from a source tarball): fall back
+      # to the working tree.
+      Dir.glob("**/*", File::FNM_DOTMATCH).reject { |f| File.directory?(f) }
+    end
+
+  spec.files = tracked_files.select { |f| f.match(theme_files) }
 
   spec.metadata = {
     "bug_tracker_uri"   => "https://github.com/cotes2020/jekyll-theme-chirpy/issues",

@@ -1,5 +1,9 @@
-
-# Burp Suite Modules
+---
+title: "Burp Suite (other modules)"
+date: 2026-09-16 00:00:00 +0200
+categories: [PT1, 4-burpsuite]
+tags: [burp, burpsuite]
+---
 
 ## DECODER
 

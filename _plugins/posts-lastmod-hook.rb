@@ -2,7 +2,10 @@
 #
 # Check for changed posts
 
+GIT_AVAILABLE = system("git", "--version", out: File::NULL, err: File::NULL)
+
 Jekyll::Hooks.register :posts, :post_init do |post|
+  next unless GIT_AVAILABLE
 
   commit_num = `git rev-list --count HEAD "#{ post.path }"`
 

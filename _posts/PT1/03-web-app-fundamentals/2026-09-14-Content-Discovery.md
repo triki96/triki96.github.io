@@ -2,7 +2,7 @@
 title: "Content Discovery"
 description: "Scoperta dei contenuti di una pagina web"
 date: 2026-09-14 00:00:00 +0200
-categories: [PT1, 3-web-app]
+categories: [PT1, 3-Web-App-Fundamentals]
 tags: [content-discovery, robots-txt, sitemap, http-headers, google-dorking, wappalyzer, wayback-machine, s3-bucket, gobuster]
 ---
 

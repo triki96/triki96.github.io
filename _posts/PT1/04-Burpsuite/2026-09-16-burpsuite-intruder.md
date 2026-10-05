@@ -1,8 +1,7 @@
-
 ---
 title: "Burp Suite Intruder"
-date: 2026-09-14 00:00:00 +0200
-categories: [Cyber Security 101, Burp Suite]
+date: 2026-09-16 00:00:00 +0200
+categories: [Cyber Security 101, 4-burpsuite]
 tags: [burp-suite, intruder, fuzzing, brute-forcing, macros, csrf]
 ---
 

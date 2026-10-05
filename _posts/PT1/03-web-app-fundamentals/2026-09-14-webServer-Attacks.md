@@ -1,7 +1,7 @@
 ---
 title: "IIS Web Server Attacks"
 date: 2026-09-14 12:00:00 +0100
-categories: [PT1, 3-web-app]
+categories: [PT1, 3-Web-App-Fundamentals]
 tags: [iis, webdav, aspx, fingerprinting, tilde-enumeration, misconfigurations]
 description:  IIS Fingerprinting, Enumeration e Exploitation
 ---
