@@ -10,7 +10,7 @@ Durante un penetration test, ottenere una shell su un host è raramente il punto
 
 ## Due categorie di escalation dei privilegi
 
-![Le due categorie di escalation dei privilegi](/assets/img/privesc-categorie.svg){: w="700" }
+![Le due categorie di escalation dei privilegi](/assets/img/posts/privesc-categorie.svg){: w="700" }
 _Escalation basata sulle vulnerabilità vs basata sulla configurazione_
 
 | Categoria | Cosa sfrutta | Esempi |
