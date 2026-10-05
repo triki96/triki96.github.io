@@ -1,9 +1,9 @@
 ---
 title: SUID e SGID
-date: 2026-10-01
+date: 2026-10-01 17:18:00 +0200
 categories: [PT1, 10-privilege-escalation]
 tags: [linux, privilege-escalation, file-permissions]
-# description:
+description: "Come funzionano i permessi speciali SUID e SGID in Linux e perché possono diventare un vettore di privilege escalation."
 ---
 
 ## 1. Il concetto di base: Come funzionano i permessi in Linux?

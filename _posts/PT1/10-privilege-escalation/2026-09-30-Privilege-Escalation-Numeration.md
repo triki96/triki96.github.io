@@ -3,7 +3,7 @@ title: Linux Privilege Escalation - Enumeration
 date: 2026-09-30 18:40:00 +0200
 categories: [PT1, 10-privilege-escalation]
 tags: [linux-privilege-escalation-enumeration, enumeration, linux, privilege-escalation, find, netstat, cron, suid]
-# description:
+description: "Cheat sheet per l'enumerazione manuale di un host Linux dopo l'accesso iniziale: sistema operativo, utenti, rete e file."
 ---
 
 Manuale di riferimento per l'**enumerazione manuale** di un host Linux dopo l'accesso iniziale. L'enumerazione è la fase più critica dell'escalation dei privilegi: prima di sfruttare qualcosa bisogna capire cosa gira, chi lo esegue e cosa è configurato male. Kernel, applicazioni installate, linguaggi disponibili e password di altri utenti determinano il percorso verso la root shell.

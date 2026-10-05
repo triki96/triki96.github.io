@@ -3,7 +3,7 @@ title: "Linux Privilege Escalation: Basics"
 date: 2026-10-01 16:44:00 +0200
 categories: [PT1, 10-privilege-escalation]
 tags: [linux-privilege-escalation-basics, privilege-escalation]
-# description:
+description: "Tecniche di base di privilege escalation su Linux: sfruttamento di sudo, binari e configurazioni errate per ottenere la root shell."
 ---
 
 Vediamo le tecniche di base per fare privilege escalation su sistemi Linux.

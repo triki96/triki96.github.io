@@ -3,7 +3,7 @@ title: Host-Server Configuration Reviews
 date: 2026-09-30 16:40:00 +0200
 categories: [PT1, 10-privilege-escalation]
 tags: [host-server-configuration-reviews, configuration-review, privilege-escalation, post-exploitation, linux, windows]
-# description:
+description: "Revisione sistematica della configurazione di un host per individuare errori di configurazione sfruttabili per l'escalation dei privilegi su Linux e Windows."
 ---
 
 Durante un penetration test, ottenere una shell su un host è raramente il punto di arrivo: quasi sempre l'account compromesso ha privilegi limitati. La **revisione della configurazione** (configuration review) è il processo sistematico con cui si esamina l'host alla ricerca di errori di configurazione che permettano di elevare quei privilegi.
